@@ -1,0 +1,2459 @@
+{
+  "batch_id": "receipts_sample-firstSimulation",
+  "pdf_path": "receipts_sample.pdf",
+  "client": {
+    "name": "METRICAROM 23 INVEST CONSTRUCT SRL",
+    "cif": "RO47990281"
+  },
+  "created_at": "2026-05-07T15:00:00Z",
+  "model": "claude-opus-4-7",
+  "snapshots": {
+    "suppliers": [
+      {
+        "cod": "6",
+        "denumire": "DEDEMAN SRL",
+        "cif": "RO2816464"
+      },
+      {
+        "cod": "8",
+        "denumire": "INDEXTECH SRL",
+        "cif": "RO37797888"
+      },
+      {
+        "cod": "10",
+        "denumire": "LUKOIL ROMANIA SRL",
+        "cif": "RO10547022"
+      },
+      {
+        "cod": "19",
+        "denumire": "UNIX AUTO SRL",
+        "cif": "RO10542416"
+      },
+      {
+        "cod": "20",
+        "denumire": "OMV PETROM MARKETING SRL",
+        "cif": "RO11201891"
+      },
+      {
+        "cod": "34",
+        "denumire": "CARBOTECH SRL",
+        "cif": "RO19284485"
+      },
+      {
+        "cod": "67",
+        "denumire": "FLOWERS BY NOE SRL",
+        "cif": "RO39741913"
+      },
+      {
+        "cod": "87",
+        "denumire": "S.C. HANSA-FLEX ROMANIA S.R.L.",
+        "cif": "RO6597545"
+      },
+      {
+        "cod": "127",
+        "denumire": "OCTANO DOWNSTREAM SRL",
+        "cif": "RO38075752"
+      },
+      {
+        "cod": "129",
+        "denumire": "ADDACOR SRL",
+        "cif": "RO10248519"
+      },
+      {
+        "cod": "154",
+        "denumire": "STEFANA SRL",
+        "cif": "RO3421942"
+      },
+      {
+        "cod": "159",
+        "denumire": "RO ARRIES CON SRL",
+        "cif": "RO27685763"
+      },
+      {
+        "cod": "160",
+        "denumire": "DYNAMIC PARCEL DISTRIBUTION SA",
+        "cif": "RO9566918"
+      }
+    ],
+    "articles": [
+      {
+        "cod": "1",
+        "denumire": "COMBUSTIBIL",
+        "um": "LITRI",
+        "tip": "Combustibili"
+      },
+      {
+        "cod": "47",
+        "denumire": "CURATITOR HD 5/15 C PLUS 1.520-931.0",
+        "um": "BUC",
+        "tip": "Obiecte de inventar"
+      },
+      {
+        "cod": "48",
+        "denumire": "NIVELA OPTICA N32X SET CU TS50 SI SJJ1",
+        "um": "BUC",
+        "tip": "Obiecte de inventar"
+      }
+    ]
+  },
+  "receipts": [
+    {
+      "id": "r001",
+      "page": 1,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.36,
+        "h": 0.52
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "4001010710",
+      "date": "2026-03-01",
+      "supplier": {
+        "name_on_receipt": "OCTANO DOWNSTREAM S.R.L.",
+        "cif_on_receipt": "RO38075752",
+        "matched_cod": "127",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.05,
+          "y": 0.03,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 83.61,
+        "tva": 17.56,
+        "total": 101.17,
+        "bbox": {
+          "x": 0.05,
+          "y": 0.18,
+          "w": 0.3,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r001-l1",
+          "den_art": "MOTORINA EURO 5 - POMPA 3",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "1",
+          "match_method": "name_fuzzy",
+          "um": "L",
+          "cantitate": 12.1599,
+          "pret_unitar_net": 6.876,
+          "valoare_net": 83.61,
+          "tva": 17.56,
+          "tva_cota": 21,
+          "cont": "6022",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r002",
+      "page": 1,
+      "bbox": {
+        "x": 0.3,
+        "y": 0.02,
+        "w": 0.4,
+        "h": 0.55
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "87006811085",
+      "date": "2026-02-03",
+      "supplier": {
+        "name_on_receipt": "S.C. DEDEMAN S.R.L.",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "6",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.34,
+          "y": 0.03,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 102.93,
+        "tva": 21.62,
+        "total": 124.55,
+        "bbox": {
+          "x": 0.34,
+          "y": 0.3,
+          "w": 0.3,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r002-l1",
+          "den_art": "CLESTE REGL CU FALCI 240",
+          "cod_art_on_receipt": "27817",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 27.83,
+          "valoare_net": 27.83,
+          "tva": 5.84,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "scula durabila → obiecte de inventar"
+        },
+        {
+          "id": "r002-l2",
+          "den_art": "ROLA CU JANTA OTEL 500/4MM2/205KG",
+          "cod_art_on_receipt": "51719",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 37.55,
+          "valoare_net": 75.1,
+          "tva": 15.78,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "rola sarma sudura → consumabil"
+        }
+      ],
+      "edits": [
+        {
+          "field": "lines[0].pret_unitar_net",
+          "old": 27.83,
+          "new": 28.83,
+          "at": "2026-05-07T14:55:34.038Z"
+        },
+        {
+          "field": "lines[0].valoare_net",
+          "old": 27.83,
+          "new": 28.83,
+          "at": "2026-05-07T14:55:38.831Z"
+        },
+        {
+          "field": "lines[0].pret_unitar_net",
+          "old": 28.83,
+          "new": 27.83,
+          "at": "2026-05-07T14:55:42.052Z"
+        },
+        {
+          "field": "lines[0].valoare_net",
+          "old": 28.83,
+          "new": 27.83,
+          "at": "2026-05-07T14:55:43.712Z"
+        },
+        {
+          "field": "lines[0].pret_unitar_net",
+          "old": 27.83,
+          "new": 29.83,
+          "at": "2026-05-07T14:55:52.951Z"
+        },
+        {
+          "field": "lines[0].valoare_net",
+          "old": 27.83,
+          "new": 29.83,
+          "at": "2026-05-07T14:55:54.914Z"
+        },
+        {
+          "field": "lines[0].pret_unitar_net",
+          "old": 29.83,
+          "new": 27.83,
+          "at": "2026-05-07T14:55:58.227Z"
+        },
+        {
+          "field": "lines[0].valoare_net",
+          "old": 29.83,
+          "new": 27.83,
+          "at": "2026-05-07T14:55:59.954Z"
+        }
+      ],
+      "notes": "Factura din sistemul RO E-Factura."
+    },
+    {
+      "id": "r003",
+      "page": 1,
+      "bbox": {
+        "x": 0.65,
+        "y": 0.02,
+        "w": 0.3,
+        "h": 0.45
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "0009",
+      "date": "2026-03-04",
+      "supplier": {
+        "name_on_receipt": "SC RO ARRIES CON SRL",
+        "cif_on_receipt": "RO27685763",
+        "matched_cod": "159",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.67,
+          "y": 0.04,
+          "w": 0.27,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 33.88,
+        "tva": 7.12,
+        "total": 41,
+        "bbox": {
+          "x": 0.67,
+          "y": 0.2,
+          "w": 0.27,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r003-l1",
+          "den_art": "SCULE",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 33.88,
+          "valoare_net": 33.88,
+          "tva": 7.12,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "denumire generica 'SCULE' pe bon — obiecte de inventar; reviewer poate corecta"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r004",
+      "page": 1,
+      "bbox": {
+        "x": 0.05,
+        "y": 0.55,
+        "w": 0.3,
+        "h": 0.42
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "0001",
+      "date": "2026-03-04",
+      "supplier": {
+        "name_on_receipt": "SC RO ARRIES CON SRL",
+        "cif_on_receipt": "RO27685763",
+        "matched_cod": "159",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.07,
+          "y": 0.57,
+          "w": 0.27,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 9.92,
+        "tva": 2.08,
+        "total": 12,
+        "bbox": {
+          "x": 0.07,
+          "y": 0.75,
+          "w": 0.27,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r004-l1",
+          "den_art": "SCULE",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 9.92,
+          "valoare_net": 9.92,
+          "tva": 2.08,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "denumire generica 'SCULE' pe bon — obiecte de inventar; reviewer poate corecta"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r031",
+      "page": 1,
+      "bbox": {
+        "x": 0.3849489502075546,
+        "y": 0.0020310488756177586,
+        "w": 0.3622707305759132,
+        "h": 0.4984912723588395
+      },
+      "status": "needs_attention",
+      "status_reason": "supplier_not_found",
+      "doc_type": "B",
+      "doc_number": null,
+      "date": null,
+      "supplier": {
+        "name_on_receipt": "",
+        "cif_on_receipt": null,
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": null
+      },
+      "totals": {
+        "valoare_net": 0,
+        "tva": 0,
+        "total": 0,
+        "bbox": null
+      },
+      "lines": [],
+      "edits": [
+        {
+          "op": "manual_create",
+          "field": "",
+          "old": null,
+          "new": {
+            "page": 1,
+            "bbox": {
+              "x": 0.3849489502075546,
+              "y": 0.0020310488756177586,
+              "w": 0.3622707305759132,
+              "h": 0.4984912723588395
+            }
+          },
+          "at": "2026-05-07T14:54:56.840Z"
+        }
+      ],
+      "notes": "Adaugat manual"
+    },
+    {
+      "id": "r005",
+      "page": 2,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.32,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "87009115194",
+      "date": "2026-03-10",
+      "supplier": {
+        "name_on_receipt": "S.C. DEDEMAN S.R.L.",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "6",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.04,
+          "y": 0.04,
+          "w": 0.28,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 418.83,
+        "tva": 87.96,
+        "total": 506.79,
+        "bbox": {
+          "x": 0.04,
+          "y": 0.4,
+          "w": 0.28,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r005-l1",
+          "den_art": "TRUSA AUTO MEGA DRIVE 107193",
+          "cod_art_on_receipt": "1084522",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 32.97,
+          "valoare_net": 32.97,
+          "tva": 6.92,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": "trusa auto"
+        },
+        {
+          "id": "r005-l2",
+          "den_art": "TRUSA STATIONARA DE PRIM AJUTOR ET2-EK2",
+          "cod_art_on_receipt": "2034763",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 209.09,
+          "valoare_net": 209.09,
+          "tva": 43.91,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "trusa SSM"
+        },
+        {
+          "id": "r005-l3",
+          "den_art": "STINGATOR P1 CU MANOMETRU",
+          "cod_art_on_receipt": "7015124",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 48.76,
+          "valoare_net": 48.76,
+          "tva": 10.24,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "stingator SSM"
+        },
+        {
+          "id": "r005-l4",
+          "den_art": "STINGATOR PSI P6",
+          "cod_art_on_receipt": "7015128",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 128.02,
+          "valoare_net": 128.02,
+          "tva": 26.88,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "stingator SSM"
+        }
+      ],
+      "edits": [],
+      "notes": "Factura din sistemul RO E-Factura."
+    },
+    {
+      "id": "r006",
+      "page": 2,
+      "bbox": {
+        "x": 0.32,
+        "y": 0.02,
+        "w": 0.3,
+        "h": 0.55
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "B",
+      "doc_number": "400",
+      "date": "2026-03-06",
+      "supplier": {
+        "name_on_receipt": "S.C. LUKOIL ROMANIA S.R.L.",
+        "cif_on_receipt": "RO10547022",
+        "matched_cod": "10",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.34,
+          "y": 0.04,
+          "w": 0.28,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 436.41,
+        "tva": 91.65,
+        "total": 528.06,
+        "bbox": {
+          "x": 0.34,
+          "y": 0.3,
+          "w": 0.28,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r006-l1",
+          "den_art": "MOTORINA",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "1",
+          "match_method": "name_fuzzy",
+          "um": "L",
+          "cantitate": 61.299,
+          "pret_unitar_net": 7.119,
+          "valoare_net": 436.41,
+          "tva": 91.65,
+          "tva_cota": 21,
+          "cont": "6022",
+          "bbox": null,
+          "notes": "diesel pompa 5; cantitate/pret deduse din total"
+        }
+      ],
+      "edits": [],
+      "notes": "Pe bon apare separat sectiunea 'BON NEFISCAL' (pare a fi eticheta/loyalty alaturata) — reviewer sa confirme ca nu este un bon nefiscal complet."
+    },
+    {
+      "id": "r007",
+      "page": 2,
+      "bbox": {
+        "x": 0.62,
+        "y": 0.02,
+        "w": 0.35,
+        "h": 0.55
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "0094-00079",
+      "date": "2026-02-18",
+      "supplier": {
+        "name_on_receipt": "S.C. OMV PETROM MARKETING S.R.L.",
+        "cif_on_receipt": "RO11201891",
+        "matched_cod": "20",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.64,
+          "y": 0.04,
+          "w": 0.32,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 165.28,
+        "tva": 34.71,
+        "total": 199.99,
+        "bbox": {
+          "x": 0.64,
+          "y": 0.2,
+          "w": 0.32,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r007-l1",
+          "den_art": "MOTORINA STANDARD",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "1",
+          "match_method": "name_fuzzy",
+          "um": "L",
+          "cantitate": 24.6596,
+          "pret_unitar_net": 6.702,
+          "valoare_net": 165.28,
+          "tva": 34.71,
+          "tva_cota": 21,
+          "cont": "6022",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r008",
+      "page": 3,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.3,
+        "h": 0.42
+      },
+      "status": "needs_attention",
+      "status_reason": "not_a_receipt",
+      "doc_type": "B",
+      "doc_number": null,
+      "date": "2026-02-26",
+      "supplier": {
+        "name_on_receipt": "DPD - Dynamic Parcel Distribution",
+        "cif_on_receipt": null,
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": null
+      },
+      "totals": {
+        "valoare_net": null,
+        "tva": null,
+        "total": null,
+        "bbox": null
+      },
+      "lines": [],
+      "edits": [],
+      "notes": "AWB / chitanta de curierat DPD, nu este bon fiscal."
+    },
+    {
+      "id": "r009",
+      "page": 3,
+      "bbox": {
+        "x": 0.4,
+        "y": 0.02,
+        "w": 0.45,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "0135-00051",
+      "date": "2026-03-24",
+      "supplier": {
+        "name_on_receipt": "S.C. OMV PETROM MARKETING S.R.L.",
+        "cif_on_receipt": "RO11201891",
+        "matched_cod": "20",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.42,
+          "y": 0.04,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 294.69,
+        "tva": 61.89,
+        "total": 356.58,
+        "bbox": {
+          "x": 0.42,
+          "y": 0.2,
+          "w": 0.4,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r009-l1",
+          "den_art": "BENZINA STANDARD 95",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "1",
+          "match_method": "name_fuzzy",
+          "um": "L",
+          "cantitate": 38.9704,
+          "pret_unitar_net": 7.562,
+          "valoare_net": 294.69,
+          "tva": 61.89,
+          "tva_cota": 21,
+          "cont": "6022",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r010",
+      "page": 3,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.55,
+        "w": 0.3,
+        "h": 0.42
+      },
+      "status": "needs_attention",
+      "status_reason": "not_a_receipt",
+      "doc_type": "B",
+      "doc_number": null,
+      "date": "2026-02-26",
+      "supplier": {
+        "name_on_receipt": "DPD - Dynamic Parcel Distribution",
+        "cif_on_receipt": null,
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": null
+      },
+      "totals": {
+        "valoare_net": null,
+        "tva": null,
+        "total": null,
+        "bbox": null
+      },
+      "lines": [],
+      "edits": [],
+      "notes": "AWB / chitanta de curierat DPD, nu este bon fiscal."
+    },
+    {
+      "id": "r011",
+      "page": 4,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.32,
+        "h": 0.55
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "87001256604",
+      "date": "2026-03-16",
+      "supplier": {
+        "name_on_receipt": "S.C. DEDEMAN S.R.L.",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "6",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.04,
+          "y": 0.04,
+          "w": 0.28,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 100.08,
+        "tva": 21.02,
+        "total": 121.1,
+        "bbox": {
+          "x": 0.04,
+          "y": 0.3,
+          "w": 0.28,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r011-l1",
+          "den_art": "RACORD PORTFURTUN ALAMA 25X1 MASCULIN",
+          "cod_art_on_receipt": "2025310",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 14.12,
+          "valoare_net": 14.12,
+          "tva": 2.97,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r011-l2",
+          "den_art": "PUNGI INCOLORE 200X300X0,04",
+          "cod_art_on_receipt": "7008209",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 0.25,
+          "valoare_net": 0.25,
+          "tva": 0.05,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "include ecotaxa/taxa verde 0.15 lei/buc"
+        },
+        {
+          "id": "r011-l3",
+          "den_art": "ROBINET TRECERE FLUTURE 1\"FF F-COMFORT",
+          "cod_art_on_receipt": "2032801",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 38.11,
+          "valoare_net": 38.11,
+          "tva": 8,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r011-l4",
+          "den_art": "MANSON REDUS PT IBC 1000L 2\"X1\" FE",
+          "cod_art_on_receipt": "2026397",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 47.6,
+          "valoare_net": 47.6,
+          "tva": 10,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": "Factura din sistemul RO E-Factura."
+    },
+    {
+      "id": "r012",
+      "page": 4,
+      "bbox": {
+        "x": 0.32,
+        "y": 0.02,
+        "w": 0.32,
+        "h": 0.55
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "87005758092",
+      "date": "2026-03-19",
+      "supplier": {
+        "name_on_receipt": "SC DEDEMAN SRL",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "6",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.34,
+          "y": 0.04,
+          "w": 0.28,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 299.74,
+        "tva": 62.94,
+        "total": 362.68,
+        "bbox": {
+          "x": 0.34,
+          "y": 0.3,
+          "w": 0.28,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r012-l1",
+          "den_art": "CAZMA FARA COADA 35785",
+          "cod_art_on_receipt": "7006831",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 22.79,
+          "valoare_net": 22.79,
+          "tva": 4.79,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "scula durabila"
+        },
+        {
+          "id": "r012-l2",
+          "den_art": "CAZMA GRUNVAN 3903",
+          "cod_art_on_receipt": "7075596",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 3,
+          "pret_unitar_net": 43.97,
+          "valoare_net": 131.9,
+          "tva": 27.7,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "scula durabila"
+        },
+        {
+          "id": "r012-l3",
+          "den_art": "LOPATA DREAPTA CU COADA LT 35821",
+          "cod_art_on_receipt": "7047202",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 41.53,
+          "valoare_net": 83.06,
+          "tva": 17.44,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "scula durabila"
+        },
+        {
+          "id": "r012-l4",
+          "den_art": "TARANCOP 3KG VT COADA LEMN 896",
+          "cod_art_on_receipt": "7028644",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 61.98,
+          "valoare_net": 61.98,
+          "tva": 13.02,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "scula durabila"
+        }
+      ],
+      "edits": [],
+      "notes": "Factura din sistemul RO E-Factura."
+    },
+    {
+      "id": "r013",
+      "page": 4,
+      "bbox": {
+        "x": 0.65,
+        "y": 0.02,
+        "w": 0.3,
+        "h": 0.4
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "0014",
+      "date": "2026-03-17",
+      "supplier": {
+        "name_on_receipt": "SC CARBOTECH SRL",
+        "cif_on_receipt": "RO19284485",
+        "matched_cod": "34",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.67,
+          "y": 0.04,
+          "w": 0.27,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 60.33,
+        "tva": 12.67,
+        "total": 73,
+        "bbox": {
+          "x": 0.67,
+          "y": 0.18,
+          "w": 0.27,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r013-l1",
+          "den_art": "RULMENT/PIESA AUTO",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 60.33,
+          "valoare_net": 60.33,
+          "tva": 12.67,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": "denumire articol nedescifrabila pe scan; CARBOTECH = piese auto, presupun 6024 — reviewer sa confirme"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r014",
+      "page": 5,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.45,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "87009115772",
+      "date": "2026-03-20",
+      "supplier": {
+        "name_on_receipt": "S.C. DEDEMAN S.R.L.",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "6",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.04,
+          "y": 0.04,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 157.85,
+        "tva": 33.15,
+        "total": 191,
+        "bbox": {
+          "x": 0.04,
+          "y": 0.25,
+          "w": 0.4,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r014-l1",
+          "den_art": "COT PVC 315X45 CU INEL",
+          "cod_art_on_receipt": "2001275",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 157.85,
+          "valoare_net": 157.85,
+          "tva": 33.15,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": "Factura din sistemul RO E-Factura."
+    },
+    {
+      "id": "r015",
+      "page": 5,
+      "bbox": {
+        "x": 0.5,
+        "y": 0.02,
+        "w": 0.45,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "87010111695",
+      "date": "2026-03-16",
+      "supplier": {
+        "name_on_receipt": "DEDEMAN",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "6",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.52,
+          "y": 0.04,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 294.94,
+        "tva": 61.94,
+        "total": 356.88,
+        "bbox": {
+          "x": 0.52,
+          "y": 0.25,
+          "w": 0.4,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r015-l1",
+          "den_art": "POLICARBONAT 2P 6MM UV 2X1.05 CLAR ESP",
+          "cod_art_on_receipt": "6014832",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "COL",
+          "cantitate": 6,
+          "pret_unitar_net": 49.16,
+          "valoare_net": 294.94,
+          "tva": 61.94,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "materiale de constructii"
+        }
+      ],
+      "edits": [],
+      "notes": "Factura din sistemul RO E-Factura."
+    },
+    {
+      "id": "r016",
+      "page": 6,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.45,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "87010111771",
+      "date": "2026-03-17",
+      "supplier": {
+        "name_on_receipt": "S.C. DEDEMAN S.R.L.",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "6",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.04,
+          "y": 0.04,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 2657.16,
+        "tva": 558,
+        "total": 3215.16,
+        "bbox": {
+          "x": 0.04,
+          "y": 0.3,
+          "w": 0.4,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r016-l1",
+          "den_art": "CURATITOR HD 5/15 C PLUS 1.520-931.0",
+          "cod_art_on_receipt": "1019443",
+          "matched_cod_art": "47",
+          "match_method": "name_fuzzy",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 3223.14,
+          "valoare_net": 3223.14,
+          "tva": 676.86,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "obiect de inventar < 5000 lei (dupa reducere 2657.16 lei net)"
+        },
+        {
+          "id": "r016-l2",
+          "den_art": "REDUCERE PROMO",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": -1,
+          "pret_unitar_net": 565.98,
+          "valoare_net": -565.98,
+          "tva": -118.86,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "reducere promo aplicata pe r016-l1"
+        }
+      ],
+      "edits": [],
+      "notes": "Factura din sistemul RO E-Factura. Include taxa verde 23 lei/buc."
+    },
+    {
+      "id": "r017",
+      "page": 6,
+      "bbox": {
+        "x": 0.5,
+        "y": 0.02,
+        "w": 0.4,
+        "h": 0.55
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "0198-00272",
+      "date": "2026-03-16",
+      "supplier": {
+        "name_on_receipt": "S.C. OMV PETROM MARKETING S.R.L.",
+        "cif_on_receipt": "RO11201891",
+        "matched_cod": "20",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.52,
+          "y": 0.04,
+          "w": 0.36,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 281.79,
+        "tva": 59.18,
+        "total": 340.97,
+        "bbox": {
+          "x": 0.52,
+          "y": 0.2,
+          "w": 0.36,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r017-l1",
+          "den_art": "OMV MAXXMOTION 95",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "1",
+          "match_method": "name_fuzzy",
+          "um": "L",
+          "cantitate": 39.8795,
+          "pret_unitar_net": 7.066,
+          "valoare_net": 281.79,
+          "tva": 59.18,
+          "tva_cota": 21,
+          "cont": "6022",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r018",
+      "page": 7,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "needs_attention",
+      "status_reason": "illegible",
+      "doc_type": " ",
+      "doc_number": "FLO 02323",
+      "date": "2026-03-24",
+      "supplier": {
+        "name_on_receipt": "FLOWERS BY NOE SRL",
+        "cif_on_receipt": "RO39741913",
+        "matched_cod": "67",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.4,
+          "y": 0.05,
+          "w": 0.55,
+          "h": 0.1
+        }
+      },
+      "totals": {
+        "valoare_net": 6253.72,
+        "tva": 1313.28,
+        "total": 7567,
+        "bbox": {
+          "x": 0.5,
+          "y": 0.55,
+          "w": 0.45,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r018-l1",
+          "den_art": "(nedescifrat)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 5800,
+          "valoare_net": 5800,
+          "tva": 1218,
+          "tva_cota": 21,
+          "cont": "6231",
+          "bbox": null,
+          "notes": "denumire produs nedescifrabila pe scan; furnizor flori → presupun protocol; reviewer sa verifice si eventual sa schimbe contul"
+        },
+        {
+          "id": "r018-l2",
+          "den_art": "(nedescifrat)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 453.72,
+          "valoare_net": 453.72,
+          "tva": 95.28,
+          "tva_cota": 21,
+          "cont": "6231",
+          "bbox": null,
+          "notes": "denumire produs nedescifrabila pe scan"
+        }
+      ],
+      "edits": [],
+      "notes": "Coloana de denumire produse nu este vizibila pe scan (taiata in stanga); reviewer trebuie sa completeze denumirile si sa confirme contul."
+    },
+    {
+      "id": "r019",
+      "page": 8,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IND/20260231",
+      "date": "2026-02-18",
+      "supplier": {
+        "name_on_receipt": "INDEXTECH SRL",
+        "cif_on_receipt": "RO37797888",
+        "matched_cod": "8",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.05,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 203.3,
+        "tva": 42.7,
+        "total": 246,
+        "bbox": {
+          "x": 0.65,
+          "y": 0.55,
+          "w": 0.3,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r019-l1",
+          "den_art": "(denumire taiata)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 46.28,
+          "valoare_net": 46.28,
+          "tva": 9.72,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "denumire taiata pe scan; presupun consumabil auto"
+        },
+        {
+          "id": "r019-l2",
+          "den_art": "(denumire taiata)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 4,
+          "pret_unitar_net": 10.74,
+          "valoare_net": 42.97,
+          "tva": 9.03,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "denumire taiata pe scan"
+        },
+        {
+          "id": "r019-l3",
+          "den_art": "ULEI MOTOR (denumire partial taiata) 1L",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 4,
+          "pret_unitar_net": 25.62,
+          "valoare_net": 102.48,
+          "tva": 21.52,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": "presupun ulei motor (1l) → 6024"
+        },
+        {
+          "id": "r019-l4",
+          "den_art": "Bujie DEN W20EP-U",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 11.57,
+          "valoare_net": 11.57,
+          "tva": 2.43,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": "bujie → piese auto"
+        }
+      ],
+      "edits": [],
+      "notes": "Coloana de denumiri partial taiata pe scan."
+    },
+    {
+      "id": "r020",
+      "page": 9,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IND/20260346",
+      "date": "2026-03-06",
+      "supplier": {
+        "name_on_receipt": "INDEXTECH SRL",
+        "cif_on_receipt": "RO37797888",
+        "matched_cod": "8",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.05,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 133.88,
+        "tva": 28.12,
+        "total": 162,
+        "bbox": {
+          "x": 0.65,
+          "y": 0.45,
+          "w": 0.3,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r020-l1",
+          "den_art": "STORNO disc (cod 715.350)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": -1,
+          "pret_unitar_net": 514.05,
+          "valoare_net": -514.05,
+          "tva": -107.95,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "storno (retur) — cantitate negativa"
+        },
+        {
+          "id": "r020-l2",
+          "den_art": "Disc diamantat EC 15.400",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 647.93,
+          "valoare_net": 647.93,
+          "tva": 136.07,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "disc diamantat — consumabil"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r021",
+      "page": 10,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IND/20260367",
+      "date": "2026-03-10",
+      "supplier": {
+        "name_on_receipt": "INDEXTECH SRL",
+        "cif_on_receipt": "RO37797888",
+        "matched_cod": "8",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.05,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 1405.8,
+        "tva": 295.22,
+        "total": 1701.02,
+        "bbox": {
+          "x": 0.65,
+          "y": 0.45,
+          "w": 0.3,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r021-l1",
+          "den_art": "NIVELA OPTICA N32X SET CU TS50 SI SJJ1",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "48",
+          "match_method": "name_fuzzy",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 1300,
+          "valoare_net": 1300,
+          "tva": 273,
+          "tva_cota": 21,
+          "cont": "303",
+          "bbox": null,
+          "notes": "obiect de inventar < 5000 lei"
+        },
+        {
+          "id": "r021-l2",
+          "den_art": "Manusi protectie nylon -PX300 M9",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 24,
+          "pret_unitar_net": 3.72,
+          "valoare_net": 89.28,
+          "tva": 18.75,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "echipament protectie"
+        },
+        {
+          "id": "r021-l3",
+          "den_art": "Flap disc A40/125x22.23 mm D-63476",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 8.26,
+          "valoare_net": 16.52,
+          "tva": 3.47,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "consumabil"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r022",
+      "page": 11,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IS_STE_D 6999",
+      "date": "2026-03-16",
+      "supplier": {
+        "name_on_receipt": "STEFANA SRL",
+        "cif_on_receipt": "RO3421942",
+        "matched_cod": "154",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.2,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 511.12,
+        "tva": 107.33,
+        "total": 618.45,
+        "bbox": {
+          "x": 0.55,
+          "y": 0.85,
+          "w": 0.4,
+          "h": 0.08
+        }
+      },
+      "lines": [
+        {
+          "id": "r022-l1",
+          "den_art": "JACHETA PILOT ALASKA 5B16",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 235.54,
+          "valoare_net": 471.08,
+          "tva": 98.92,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "echipament protectie"
+        },
+        {
+          "id": "r022-l2",
+          "den_art": "BOCANC 5A48 DALAS",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "PER",
+          "cantitate": 1,
+          "pret_unitar_net": 78.51,
+          "valoare_net": 78.51,
+          "tva": 16.49,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "echipament protectie (incaltaminte de lucru)"
+        },
+        {
+          "id": "r022-l3",
+          "den_art": "REDUCERE",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": -1,
+          "pret_unitar_net": 38.47,
+          "valoare_net": -38.47,
+          "tva": -8.08,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "reducere comerciala"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r023",
+      "page": 12,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "needs_attention",
+      "status_reason": "wrong_client",
+      "doc_type": " ",
+      "doc_number": "IA26/1470",
+      "date": "2026-03-26",
+      "supplier": {
+        "name_on_receipt": "Unix Auto Srl",
+        "cif_on_receipt": "RO10542416",
+        "matched_cod": "19",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.1,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 538.4,
+        "tva": 113.06,
+        "total": 651.46,
+        "bbox": {
+          "x": 0.5,
+          "y": 0.45,
+          "w": 0.45,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r023-l1",
+          "den_art": "Ulei motor VALVOLINE 908776",
+          "cod_art_on_receipt": "11230460",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 27.96,
+          "valoare_net": 55.92,
+          "tva": 11.74,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r023-l2",
+          "den_art": "Acumulator (Baterie) VARTA 580406074K262",
+          "cod_art_on_receipt": "129414",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 482.48,
+          "valoare_net": 482.48,
+          "tva": 101.32,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": "Factura emisa pentru 'METRI CARE CONSTRUCT SRL', CIF 38651871 — NU corespunde clientului METRICAROM 23 INVEST CONSTRUCT (RO47990281). Probabil scanata din greseala in acest batch."
+    },
+    {
+      "id": "r024",
+      "page": 13,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IS_STE_D 7035",
+      "date": "2026-03-18",
+      "supplier": {
+        "name_on_receipt": "STEFANA SRL",
+        "cif_on_receipt": "RO3421942",
+        "matched_cod": "154",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.2,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 367.4,
+        "tva": 77.16,
+        "total": 444.56,
+        "bbox": {
+          "x": 0.55,
+          "y": 0.85,
+          "w": 0.4,
+          "h": 0.08
+        }
+      },
+      "lines": [
+        {
+          "id": "r024-l1",
+          "den_art": "MANUSA PETRAX A8007",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "PER",
+          "cantitate": 12,
+          "pret_unitar_net": 8.02,
+          "valoare_net": 96.2,
+          "tva": 20.2,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "echipament protectie"
+        },
+        {
+          "id": "r024-l2",
+          "den_art": "Antifoane externe Stille 45D2",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 22.31,
+          "valoare_net": 22.31,
+          "tva": 4.69,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "echipament protectie"
+        },
+        {
+          "id": "r024-l3",
+          "den_art": "Jacheta softshell hi-vis VizLite 5B143",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 107.44,
+          "valoare_net": 214.88,
+          "tva": 45.12,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "echipament protectie"
+        },
+        {
+          "id": "r024-l4",
+          "den_art": "Manopera imprimat sigla mare",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 20.66,
+          "valoare_net": 41.32,
+          "tva": 8.68,
+          "tva_cota": 21,
+          "cont": "628",
+          "bbox": null,
+          "notes": "serviciu imprimare → 628 alte servicii terti"
+        },
+        {
+          "id": "r024-l5",
+          "den_art": "Manopera imprimat sigla mica",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 8.02,
+          "valoare_net": 16.03,
+          "tva": 3.37,
+          "tva_cota": 21,
+          "cont": "628",
+          "bbox": null,
+          "notes": "serviciu imprimare → 628 alte servicii terti"
+        },
+        {
+          "id": "r024-l6",
+          "den_art": "REDUCERE",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": -1,
+          "pret_unitar_net": 23.34,
+          "valoare_net": -23.34,
+          "tva": -4.9,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "reducere comerciala"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r025",
+      "page": 15,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IS ADD33896",
+      "date": "2026-03-18",
+      "supplier": {
+        "name_on_receipt": "ADDACOR SRL",
+        "cif_on_receipt": "RO10248519",
+        "matched_cod": "129",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.05,
+          "y": 0.2,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 347.5,
+        "tva": 72.98,
+        "total": 420.48,
+        "bbox": {
+          "x": 0.6,
+          "y": 0.55,
+          "w": 0.35,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r025-l1",
+          "den_art": "FURTUN R2AT - 5/8\", L=2,4m",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 255,
+          "valoare_net": 255,
+          "tva": 53.55,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "furtun hidraulic"
+        },
+        {
+          "id": "r025-l2",
+          "den_art": "REP.FURTUN R2AT - 5/8\"",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 55,
+          "valoare_net": 55,
+          "tva": 11.55,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r025-l3",
+          "den_art": "SPIRALA PVC FURTUN DN25",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "ML",
+          "cantitate": 2.5,
+          "pret_unitar_net": 15,
+          "valoare_net": 37.5,
+          "tva": 7.88,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": "Pagina 14 din PDF este goala (scan necitibil) si a fost ignorata."
+    },
+    {
+      "id": "r026",
+      "page": 16,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IA26/1459",
+      "date": "2026-03-25",
+      "supplier": {
+        "name_on_receipt": "Unix Auto Srl",
+        "cif_on_receipt": "RO10542416",
+        "matched_cod": "19",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.1,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 65.06,
+        "tva": 13.66,
+        "total": 78.72,
+        "bbox": {
+          "x": 0.5,
+          "y": 0.45,
+          "w": 0.45,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r026-l1",
+          "den_art": "Curea cu caneluri A.Z. MEISTERTEILE AZMT-20-03",
+          "cod_art_on_receipt": "11085281",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 65.06,
+          "valoare_net": 65.06,
+          "tva": 13.66,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": "curea distributie/transmisie auto"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r027",
+      "page": 17,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "HF/1440191436",
+      "date": "2026-03-05",
+      "supplier": {
+        "name_on_receipt": "HANSA-FLEX Romania S.R.L.",
+        "cif_on_receipt": "RO6597545",
+        "matched_cod": "87",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.4,
+          "y": 0.05,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 152.73,
+        "tva": 32.07,
+        "total": 184.8,
+        "bbox": {
+          "x": 0.55,
+          "y": 0.65,
+          "w": 0.4,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r027-l1",
+          "den_art": "SKS20IR3FS Fisa cuplaj conector FS IGR3/4\" BG3 (cod marfa 84812010)",
+          "cod_art_on_receipt": "SKS20IR3FS",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 152.73,
+          "valoare_net": 152.73,
+          "tva": 32.07,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "fitting hidraulic"
+        }
+      ],
+      "edits": [],
+      "notes": "Comanda CD Butnea Radu."
+    },
+    {
+      "id": "r028",
+      "page": 18,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IND/20260345",
+      "date": "2026-03-05",
+      "supplier": {
+        "name_on_receipt": "INDEXTECH SRL",
+        "cif_on_receipt": "RO37797888",
+        "matched_cod": "8",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.05,
+          "w": 0.4,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 595.29,
+        "tva": 125.01,
+        "total": 720.3,
+        "bbox": {
+          "x": 0.65,
+          "y": 0.55,
+          "w": 0.3,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r028-l1",
+          "den_art": "Disc taietor (cod 715.350)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 514.05,
+          "valoare_net": 514.05,
+          "tva": 107.95,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "consumabil (disc taietor)"
+        },
+        {
+          "id": "r028-l2",
+          "den_art": "Disc taietor 2608619768",
+          "cod_art_on_receipt": "2608619768",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 7,
+          "pret_unitar_net": 2.07,
+          "valoare_net": 14.49,
+          "tva": 3.04,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r028-l3",
+          "den_art": "Flap disc A40/125x22.23 mm D-63476",
+          "cod_art_on_receipt": "D-63476",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 8.26,
+          "valoare_net": 16.52,
+          "tva": 3.47,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r028-l4",
+          "den_art": "Bujie DEN W20EP-U",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 11.57,
+          "valoare_net": 23.14,
+          "tva": 4.86,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r028-l5",
+          "den_art": "Sfoara demaror 4mm",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 9,
+          "pret_unitar_net": 3.01,
+          "valoare_net": 27.09,
+          "tva": 5.69,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r029",
+      "page": 19,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "CARB 100260",
+      "date": "2026-03-05",
+      "supplier": {
+        "name_on_receipt": "CARBOTECH SRL",
+        "cif_on_receipt": "RO19284485",
+        "matched_cod": "34",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.05,
+          "y": 0.05,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 258,
+        "tva": 54.18,
+        "total": 312.18,
+        "bbox": {
+          "x": 0.55,
+          "y": 0.45,
+          "w": 0.4,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r029-l1",
+          "den_art": "Acumulator/baterie (UM 185Li3) (LiCa2-Total)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 12,
+          "pret_unitar_net": 16,
+          "valoare_net": 192,
+          "tva": 40.32,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "denumire articol partial taiata pe scan"
+        },
+        {
+          "id": "r029-l2",
+          "den_art": "(denumire taiata) 3.48 Kg",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 52,
+          "valoare_net": 52,
+          "tva": 10.92,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "denumire articol nedescifrabila pe scan"
+        },
+        {
+          "id": "r029-l3",
+          "den_art": "(denumire taiata)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 14,
+          "valoare_net": 14,
+          "tva": 2.94,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": "denumire articol nedescifrabila pe scan"
+        }
+      ],
+      "edits": [],
+      "notes": "Coloana de denumiri partial taiata pe scan."
+    },
+    {
+      "id": "r030",
+      "page": 20,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": " ",
+      "doc_number": "IS_STE_D 6936",
+      "date": "2026-03-02",
+      "supplier": {
+        "name_on_receipt": "STEFANA SRL",
+        "cif_on_receipt": "RO3421942",
+        "matched_cod": "154",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.2,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 787.81,
+        "tva": 165.44,
+        "total": 953.25,
+        "bbox": {
+          "x": 0.55,
+          "y": 0.85,
+          "w": 0.4,
+          "h": 0.08
+        }
+      },
+      "lines": [
+        {
+          "id": "r030-l1",
+          "den_art": "JACHETA (cod 16, denumire partial taiata)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 3,
+          "pret_unitar_net": 235.54,
+          "valoare_net": 706.61,
+          "tva": 148.39,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "pret unitar 235.54 identic cu jacheta pilot 5B16 din r022 → presupun acelasi articol"
+        },
+        {
+          "id": "r030-l2",
+          "den_art": "COMA CQVATACAM2",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 140.5,
+          "valoare_net": 140.5,
+          "tva": 29.5,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "denumire OCR-uita (probabil casca / camasa de protectie); reviewer sa confirme"
+        },
+        {
+          "id": "r030-l3",
+          "den_art": "REDUCERE",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": -1,
+          "pret_unitar_net": 59.3,
+          "valoare_net": -59.3,
+          "tva": -12.45,
+          "tva_cota": 21,
+          "cont": "6028",
+          "bbox": null,
+          "notes": "reducere comerciala"
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    }
+  ]
+}

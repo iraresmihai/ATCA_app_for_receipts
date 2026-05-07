@@ -41,7 +41,35 @@ For each fiscal receipt visible in the PDF (multiple per page is normal):
 ### Lines (one per product line on the receipt)
 - `den_art`: as printed on the receipt.
 - `cod_art_on_receipt`: the SKU/cod if printed (often empty on bonuri fiscale).
-- `um`, `cantitate`: as printed.
+- `um`: **must be one of the SAGA-accepted UM codes below — never invent a new one.** If the receipt prints something different (`COL`, `BAX`, `ML` for "metri liniari", lowercase variants, etc.), map it to the closest valid code and add a short justification in `notes`.
+
+  | Code | Meaning | Code | Meaning |
+  |---|---|---|---|
+  | `BUC` | Bucata | `KG` | Kilogram |
+  | `LITRI` | Litru | `M` | Metru |
+  | `GRAME` | Gram | `CUTII` | Cutie |
+  | `PAC` | Pachet | `PUNGI` | Punga |
+  | `SET` | Set | `MP` | Metru patrat |
+  | `MC` | Metru cub | `MM` | Milimetru |
+  | `CM` | Centimetru | `KM` | Kilometru |
+  | `TONE` | Tona | `PER` | Pereche |
+  | `SACI` | Sac | `ML` | **Mililitru** (NOT metru liniar — use `M`) |
+  | `KWH` | Kilowatt ora | `ORE` | Ora |
+  | `MIN` | Minut | `ZILE` | Zi de lucru |
+  | `LUNI` | Luni de lucru | `DOZE` | Doza |
+  | `SERV` | Unitate de service | `1000B` | O mie de bucati |
+  | `TRIM` | Trimestru | `PROC` | Procent |
+  | `LADA` | Lada | `DT` | Dry tone |
+  | `CMP` | Centimetru patrat | `MWH` | Megawatt ora |
+  | `ROLA` | Rola | `TAMB` | Tambur |
+  | `SAC` | Sac plastic | `PALET` | Palet lemn |
+  | `UNIT` | Unitate | `TN` | Tona neta |
+  | `HA` | Hectometru patrat | `FOAIE` | Foaie / coala |
+  | `L` | Litru (varianta scurta — folosit pe bonurile de combustibil) | | |
+
+  Common mappings: fuel `L`/`LITRI` → `L`; printed `COL`/coli → `FOAIE`; printed `ML` for metri liniari → `M`; `PER` (pereche) for incaltaminte/manusi.
+
+- `cantitate`: as printed.
 - `pret_unitar_net`, `valoare_net`: NET (without TVA). If the receipt only shows gross, divide by `(1 + tva_cota/100)`.
 - `tva`, `tva_cota`: TVA value and cota (Romania 2026: usually `21`, sometimes `9` or `5`).
 - `cont`: pick from the table below.

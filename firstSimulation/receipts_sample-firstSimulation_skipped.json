@@ -1,0 +1,264 @@
+{
+  "batch_id": "receipts_sample-firstSimulation",
+  "generated_at": "2026-05-07T16:26:16.796Z",
+  "blocked_at_export": [],
+  "receipts": [
+    {
+      "id": "r031",
+      "page": 1,
+      "bbox": {
+        "x": 0.3849489502075546,
+        "y": 0.0020310488756177586,
+        "w": 0.3622707305759132,
+        "h": 0.4984912723588395
+      },
+      "status": "needs_attention",
+      "status_reason": "supplier_not_found",
+      "doc_type": "B",
+      "doc_number": null,
+      "date": null,
+      "supplier": {
+        "name_on_receipt": "",
+        "cif_on_receipt": null,
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": null
+      },
+      "totals": {
+        "valoare_net": 0,
+        "tva": 0,
+        "total": 0,
+        "bbox": null
+      },
+      "lines": [],
+      "edits": [
+        {
+          "op": "manual_create",
+          "field": "",
+          "old": null,
+          "new": {
+            "page": 1,
+            "bbox": {
+              "x": 0.3849489502075546,
+              "y": 0.0020310488756177586,
+              "w": 0.3622707305759132,
+              "h": 0.4984912723588395
+            }
+          },
+          "at": "2026-05-07T14:54:56.840Z"
+        }
+      ],
+      "notes": "Adaugat manual"
+    },
+    {
+      "id": "r008",
+      "page": 3,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.3,
+        "h": 0.42
+      },
+      "status": "needs_attention",
+      "status_reason": "not_a_receipt",
+      "doc_type": "B",
+      "doc_number": null,
+      "date": "2026-02-26",
+      "supplier": {
+        "name_on_receipt": "DPD - Dynamic Parcel Distribution",
+        "cif_on_receipt": null,
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": null
+      },
+      "totals": {
+        "valoare_net": null,
+        "tva": null,
+        "total": null,
+        "bbox": null
+      },
+      "lines": [],
+      "edits": [],
+      "notes": "AWB / chitanta de curierat DPD, nu este bon fiscal."
+    },
+    {
+      "id": "r010",
+      "page": 3,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.55,
+        "w": 0.3,
+        "h": 0.42
+      },
+      "status": "needs_attention",
+      "status_reason": "not_a_receipt",
+      "doc_type": "B",
+      "doc_number": null,
+      "date": "2026-02-26",
+      "supplier": {
+        "name_on_receipt": "DPD - Dynamic Parcel Distribution",
+        "cif_on_receipt": null,
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": null
+      },
+      "totals": {
+        "valoare_net": null,
+        "tva": null,
+        "total": null,
+        "bbox": null
+      },
+      "lines": [],
+      "edits": [],
+      "notes": "AWB / chitanta de curierat DPD, nu este bon fiscal."
+    },
+    {
+      "id": "r018",
+      "page": 7,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "needs_attention",
+      "status_reason": "illegible",
+      "doc_type": " ",
+      "doc_number": "FLO 02323",
+      "date": "2026-03-24",
+      "supplier": {
+        "name_on_receipt": "FLOWERS BY NOE SRL",
+        "cif_on_receipt": "RO39741913",
+        "matched_cod": "67",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.4,
+          "y": 0.05,
+          "w": 0.55,
+          "h": 0.1
+        }
+      },
+      "totals": {
+        "valoare_net": 6253.72,
+        "tva": 1313.28,
+        "total": 7567,
+        "bbox": {
+          "x": 0.5,
+          "y": 0.55,
+          "w": 0.45,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r018-l1",
+          "den_art": "(nedescifrat)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 5800,
+          "valoare_net": 5800,
+          "tva": 1218,
+          "tva_cota": 21,
+          "cont": "6231",
+          "bbox": null,
+          "notes": "denumire produs nedescifrabila pe scan; furnizor flori → presupun protocol; reviewer sa verifice si eventual sa schimbe contul"
+        },
+        {
+          "id": "r018-l2",
+          "den_art": "(nedescifrat)",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 453.72,
+          "valoare_net": 453.72,
+          "tva": 95.28,
+          "tva_cota": 21,
+          "cont": "6231",
+          "bbox": null,
+          "notes": "denumire produs nedescifrabila pe scan"
+        }
+      ],
+      "edits": [],
+      "notes": "Coloana de denumire produse nu este vizibila pe scan (taiata in stanga); reviewer trebuie sa completeze denumirile si sa confirme contul."
+    },
+    {
+      "id": "r023",
+      "page": 12,
+      "bbox": {
+        "x": 0.02,
+        "y": 0.02,
+        "w": 0.95,
+        "h": 0.95
+      },
+      "status": "needs_attention",
+      "status_reason": "wrong_client",
+      "doc_type": " ",
+      "doc_number": "IA26/1470",
+      "date": "2026-03-26",
+      "supplier": {
+        "name_on_receipt": "Unix Auto Srl",
+        "cif_on_receipt": "RO10542416",
+        "matched_cod": "19",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.3,
+          "y": 0.1,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 538.4,
+        "tva": 113.06,
+        "total": 651.46,
+        "bbox": {
+          "x": 0.5,
+          "y": 0.45,
+          "w": 0.45,
+          "h": 0.1
+        }
+      },
+      "lines": [
+        {
+          "id": "r023-l1",
+          "den_art": "Ulei motor VALVOLINE 908776",
+          "cod_art_on_receipt": "11230460",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 27.96,
+          "valoare_net": 55.92,
+          "tva": 11.74,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": ""
+        },
+        {
+          "id": "r023-l2",
+          "den_art": "Acumulator (Baterie) VARTA 580406074K262",
+          "cod_art_on_receipt": "129414",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 482.48,
+          "valoare_net": 482.48,
+          "tva": 101.32,
+          "tva_cota": 21,
+          "cont": "6024",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": "Factura emisa pentru 'METRI CARE CONSTRUCT SRL', CIF 38651871 — NU corespunde clientului METRICAROM 23 INVEST CONSTRUCT (RO47990281). Probabil scanata din greseala in acest batch."
+    }
+  ]
+}

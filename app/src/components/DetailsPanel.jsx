@@ -13,6 +13,51 @@ const DOC_TYPES = [
 
 const TVA_COTE = [0, 5, 9, 11, 21].map(n => ({ value: n, label: `${n}%` }));
 
+// SAGA-accepted units of measure (UM). Keep in sync with classify-receipts.md.
+const UM_OPTIONS = [
+  ['BUC',   'Bucata'],
+  ['KG',    'Kilogram'],
+  ['LITRI', 'Litru'],
+  ['L',     'Litru (scurt)'],
+  ['M',     'Metru'],
+  ['GRAME', 'Gram'],
+  ['CUTII', 'Cutie'],
+  ['PAC',   'Pachet'],
+  ['PUNGI', 'Punga'],
+  ['SET',   'Set'],
+  ['MP',    'Metru patrat'],
+  ['MC',    'Metru cub'],
+  ['MM',    'Milimetru'],
+  ['CM',    'Centimetru'],
+  ['KM',    'Kilometru'],
+  ['TONE',  'Tona'],
+  ['PER',   'Pereche'],
+  ['SACI',  'Sac'],
+  ['ML',    'Mililitru'],
+  ['KWH',   'Kilowatt ora'],
+  ['ORE',   'Ora'],
+  ['MIN',   'Minut'],
+  ['ZILE',  'Zi de lucru'],
+  ['LUNI',  'Luni de lucru'],
+  ['DOZE',  'Doza'],
+  ['SERV',  'Unitate de service'],
+  ['1000B', 'O mie de bucati'],
+  ['TRIM',  'Trimestru'],
+  ['PROC',  'Procent'],
+  ['LADA',  'Lada'],
+  ['DT',    'Dry tone'],
+  ['CMP',   'Centimetru patrat'],
+  ['MWH',   'Megawatt ora'],
+  ['ROLA',  'Rola'],
+  ['TAMB',  'Tambur'],
+  ['SAC',   'Sac plastic'],
+  ['PALET', 'Palet lemn'],
+  ['UNIT',  'Unitate'],
+  ['TN',    'Tona neta'],
+  ['HA',    'Hectometru patrat'],
+  ['FOAIE', 'Foaie / coala']
+].map(([value, label]) => ({ value, label: `${value} — ${label}` }));
+
 export default function DetailsPanel({
   receipt,
   hoveredLineId,
@@ -123,7 +168,7 @@ export default function DetailsPanel({
                 />
                 <div className="grid grid-cols-2 gap-x-2">
                   <EditableField
-                    label="UM" value={l.um}
+                    label="UM" value={l.um} options={UM_OPTIONS}
                     onCommit={v => onEdit(`lines[${i}].um`, v)}
                   />
                   <EditableField

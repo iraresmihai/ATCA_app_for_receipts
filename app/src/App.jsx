@@ -4,7 +4,7 @@ import PdfViewer from './components/PdfViewer.jsx';
 import DetailsPanel from './components/DetailsPanel.jsx';
 import Splitter from './components/Splitter.jsx';
 import StatusTabs from './components/StatusTabs.jsx';
-import { applyEdit, addLine, removeLine, undoLastEdit } from './lib/edits.js';
+import { applyEdit, addLine, removeLine, undoLastEdit, recalcTotals, recalcLine } from './lib/edits.js';
 import { parseCsv } from './lib/csv.js';
 import { buildDbfBytes, partitionForExport } from './lib/dbf.js';
 import { findMissingSuppliers, buildMissingSuppliersXlsx } from './lib/missingSuppliers.js';
@@ -22,6 +22,7 @@ export default function App() {
   const [leftW, setLeftW] = useState(288);
   const [rightW, setRightW] = useState(440);
   const [statusFilter, setStatusFilter] = useState('all');
+  const [drawMode, setDrawMode] = useState(false);
 
   async function handleOpen() {
     const r = await window.api.openJson();
@@ -106,8 +107,20 @@ export default function App() {
     const folder = await window.api.pickFolder();
     if (!folder) return;
 
-    const today = new Date().toISOString().slice(0, 10);
-    const dbfName = `IN_${today}_${batch.batch_id}.DBF`;
+    const fmt = (d) => {
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      return `${dd}-${mm}-${d.getFullYear()}`;
+    };
+    const yearsFromNow = (min, max) => {
+      const yr = 365.25 * 24 * 3600 * 1000;
+      const offset = (min + Math.random() * (max - min)) * yr;
+      return new Date(Date.now() + offset);
+    };
+    const oldDate = yearsFromNow(-4, -3);
+    const futDate = yearsFromNow(2, 3);
+    const randomCode = Math.floor(10000 + Math.random() * 90000); // 5 digits
+    const dbfName = `IN_${fmt(oldDate)}_${fmt(futDate)}_${randomCode}.DBF`;
     const skipName = `${batch.batch_id}_skipped.json`;
     const dbfPath = `${folder}\\${dbfName}`;
     const skipPath = `${folder}\\${skipName}`;
@@ -129,6 +142,47 @@ export default function App() {
       `→ ${dbfName}\n\n` +
       `Skipped ${skipped.length} receipt(s)\n→ ${skipName}`
     );
+  }
+
+  function nextReceiptId(receipts) {
+    let max = 0;
+    for (const r of receipts ?? []) {
+      const m = r.id?.match(/^r(\d+)$/);
+      if (m) max = Math.max(max, Number(m[1]));
+    }
+    return `r${String(max + 1).padStart(3, '0')}`;
+  }
+
+  function handleAddReceipt(page, bbox) {
+    const id = nextReceiptId(batch.receipts);
+    const newReceipt = {
+      id,
+      page,
+      bbox,
+      status: 'needs_attention',
+      status_reason: 'supplier_not_found',
+      doc_type: 'B',
+      doc_number: null,
+      date: null,
+      supplier: {
+        name_on_receipt: '',
+        cif_on_receipt: null,
+        matched_cod: null,
+        match_method: 'none',
+        bbox: null
+      },
+      totals: { valoare_net: 0, tva: 0, total: 0, bbox: null },
+      lines: [],
+      edits: [{ op: 'manual_create', field: '', old: null, new: { page, bbox }, at: new Date().toISOString() }],
+      notes: 'Adaugat manual'
+    };
+    setBatch(prev => ({
+      ...prev,
+      receipts: [...prev.receipts, newReceipt].sort((a, b) => (a.page ?? 0) - (b.page ?? 0))
+    }));
+    setSelectedId(id);
+    setDirty(true);
+    setDrawMode(false);
   }
 
   async function handleSave() {
@@ -215,6 +269,17 @@ export default function App() {
         {dirty && <span className="text-amber-300 text-xs">● unsaved</span>}
         <div className="ml-auto flex gap-2">
           <button
+            onClick={() => setDrawMode(d => !d)}
+            className={`px-3 py-1 rounded text-sm ${
+              drawMode
+                ? 'bg-purple-700 hover:bg-purple-600 text-white'
+                : 'bg-purple-600 hover:bg-purple-500 text-white'
+            }`}
+            title="Draw a bounding box on a page to add a new receipt"
+          >
+            {drawMode ? '✎ Drawing… (Esc)' : '+ Add receipt'}
+          </button>
+          <button
             onClick={handleSave}
             disabled={!dirty || saving}
             className="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-600 disabled:text-slate-400 rounded text-sm"
@@ -260,7 +325,14 @@ export default function App() {
         <Splitter side="left" onResize={setLeftW} />
 
         <main className="flex-1 bg-slate-200 overflow-auto min-w-0">
-          <PdfViewer pdfData={pdfData} page={selected?.page ?? 1} overlays={overlays} />
+          <PdfViewer
+            pdfData={pdfData}
+            page={selected?.page ?? 1}
+            overlays={overlays}
+            drawMode={drawMode}
+            onDrawComplete={handleAddReceipt}
+            onCancelDraw={() => setDrawMode(false)}
+          />
         </main>
 
         <Splitter side="right" onResize={setRightW} />
@@ -270,11 +342,21 @@ export default function App() {
             receipt={selected}
             hoveredLineId={hoveredLineId}
             onHoverLine={setHoveredLineId}
-            onEdit={(path, value) => updateReceipt(selected.id, r => applyEdit(r, path, value))}
+            onEdit={(path, value) => updateReceipt(selected.id, r => {
+              let next = applyEdit(r, path, value);
+              const m = path.match(/^lines\[(\d+)\]\.(.+)$/);
+              if (m) {
+                const idx = Number(m[1]);
+                const updated = recalcLine(next.lines[idx], m[2]);
+                next = { ...next, lines: next.lines.map((l, i) => i === idx ? updated : l) };
+                next = recalcTotals(next);
+              }
+              return next;
+            })}
             onPickSupplier={(cod) => handlePickSupplier(selected.id, cod)}
             onChangeStatus={(status, reason) => handleChangeStatus(selected.id, status, reason)}
-            onAddLine={() => updateReceipt(selected.id, addLine)}
-            onRemoveLine={(i) => updateReceipt(selected.id, r => removeLine(r, i))}
+            onAddLine={() => updateReceipt(selected.id, r => recalcTotals(addLine(r)))}
+            onRemoveLine={(i) => updateReceipt(selected.id, r => recalcTotals(removeLine(r, i)))}
             onUndo={() => updateReceipt(selected.id, undoLastEdit)}
             allSuppliers={allSuppliers}
           />

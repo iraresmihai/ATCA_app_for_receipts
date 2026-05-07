@@ -92,6 +92,45 @@ export function removeLine(receipt, lineIndex) {
   return next;
 }
 
+// Re-derive a line's dependent fields after one of its money inputs changes.
+// Source of truth: cantitate + pret_unitar_net → valoare_net → tva (via tva_cota).
+// `changedField` tells us how to flow the update.
+export function recalcLine(line, changedField) {
+  const round = (x) => Math.round(x * 100) / 100;
+  const cant = Number(line.cantitate) || 0;
+  const cota = Number(line.tva_cota) || 0;
+  let pret = Number(line.pret_unitar_net) || 0;
+  let val  = Number(line.valoare_net) || 0;
+  let tva  = Number(line.tva) || 0;
+
+  if (changedField === 'cantitate' || changedField === 'pret_unitar_net') {
+    val = round(cant * pret);
+    tva = round(val * cota / 100);
+  } else if (changedField === 'valoare_net') {
+    if (cant !== 0) pret = round(val / cant);
+    tva = round(val * cota / 100);
+  } else if (changedField === 'tva_cota') {
+    tva = round(val * cota / 100);
+  } else {
+    return line;
+  }
+  return { ...line, pret_unitar_net: pret, valoare_net: val, tva };
+}
+
+// Re-derive receipt totals from the current lines. Intentionally silent (no edit log entry)
+// because totals are a computed view of the lines.
+export function recalcTotals(receipt) {
+  const lines = receipt.lines ?? [];
+  const sum = (key) => lines.reduce((s, l) => s + (Number(l[key]) || 0), 0);
+  const round = (x) => Math.round(x * 100) / 100;
+  const net = round(sum('valoare_net'));
+  const tva = round(sum('tva'));
+  return {
+    ...receipt,
+    totals: { ...(receipt.totals ?? {}), valoare_net: net, tva, total: round(net + tva) }
+  };
+}
+
 // Reverse the most recent edit. Returns the receipt unchanged if there's nothing to undo.
 export function undoLastEdit(receipt) {
   const edits = receipt.edits ?? [];
