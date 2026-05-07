@@ -1,0 +1,406 @@
+{
+  "batch_id": "2026-05-sample-page1",
+  "pdf_path": "receipts_sample.pdf",
+  "client": {
+    "name": "METRICAROM 23 INVEST CONSTRUCT SRL",
+    "cif": "RO47990281"
+  },
+  "created_at": "2026-05-07T12:00:00Z",
+  "model": "claude-opus-4-7",
+  "snapshots": {
+    "suppliers": [
+      {
+        "cod": "00002",
+        "denumire": "DEDEMAN SRL",
+        "cif": "RO2816464"
+      }
+    ],
+    "articles": []
+  },
+  "receipts": [
+    {
+      "id": "r001",
+      "page": 1,
+      "bbox": {
+        "x": 0.04,
+        "y": 0.005,
+        "w": 0.32,
+        "h": 0.58
+      },
+      "status": "needs_attention",
+      "status_reason": "supplier_not_found",
+      "doc_type": "B",
+      "doc_number": "4001010710",
+      "date": "2026-03-01",
+      "supplier": {
+        "name_on_receipt": "ITALIAN VINTAGE S.R.L.",
+        "cif_on_receipt": "RO29025275",
+        "matched_cod": "00001",
+        "match_method": "manual",
+        "bbox": {
+          "x": 0.07,
+          "y": 0.012,
+          "w": 0.24,
+          "h": 0.04
+        }
+      },
+      "totals": {
+        "valoare_net": 83.61,
+        "tva": 17.56,
+        "total": 101.17,
+        "bbox": {
+          "x": 0.04,
+          "y": 0.18,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "lines": [
+        {
+          "id": "r001-l1",
+          "den_art": "MOTORINA EURO 5 - POMPA 3",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "L",
+          "cantitate": 12.1599,
+          "pret_unitar_net": 6.88,
+          "valoare_net": 83.61,
+          "tva": 17.56,
+          "tva_cota": 21,
+          "cont": "6022",
+          "bbox": {
+            "x": 0.04,
+            "y": 0.13,
+            "w": 0.3,
+            "h": 0.05
+          },
+          "notes": ""
+        },
+        {
+          "id": "r001-l2",
+          "den_art": "",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 0,
+          "valoare_net": 0,
+          "tva": 0,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": null,
+          "notes": ""
+        }
+      ],
+      "edits": [
+        {
+          "field": "supplier.matched_cod",
+          "old": "00001",
+          "new": "00002",
+          "at": "2026-05-07T10:00:10.434Z"
+        },
+        {
+          "field": "supplier.matched_cod",
+          "old": "00002",
+          "new": "00003",
+          "at": "2026-05-07T10:00:12.062Z"
+        },
+        {
+          "field": "supplier.matched_cod",
+          "old": "00003",
+          "new": "00001",
+          "at": "2026-05-07T10:01:51.635Z"
+        },
+        {
+          "field": "supplier.name_on_receipt",
+          "old": "OCTANO DOWNSTREAM SRL",
+          "new": "ITALIAN VINTAGE S.R.L.",
+          "at": "2026-05-07T10:01:51.635Z"
+        },
+        {
+          "field": "supplier.cif_on_receipt",
+          "old": "RO38075752",
+          "new": "RO29025275",
+          "at": "2026-05-07T10:01:51.635Z"
+        },
+        {
+          "field": "status",
+          "old": "needs_attention",
+          "new": "ok",
+          "at": "2026-05-07T10:03:47.382Z"
+        },
+        {
+          "field": "status_reason",
+          "old": "supplier_not_found",
+          "new": null,
+          "at": "2026-05-07T10:03:47.382Z"
+        },
+        {
+          "field": "status",
+          "old": "ok",
+          "new": "needs_attention",
+          "at": "2026-05-07T10:03:48.322Z"
+        },
+        {
+          "field": "status_reason",
+          "old": null,
+          "new": "supplier_not_found",
+          "at": "2026-05-07T10:03:48.322Z"
+        },
+        {
+          "field": "status",
+          "old": "needs_attention",
+          "new": "deleted",
+          "at": "2026-05-07T10:03:49.595Z"
+        },
+        {
+          "field": "status",
+          "old": "deleted",
+          "new": "needs_attention",
+          "at": "2026-05-07T10:03:51.417Z"
+        },
+        {
+          "op": "add_line",
+          "field": "lines[1]",
+          "old": null,
+          "new": {
+            "id": "r001-l2",
+            "den_art": "",
+            "cod_art_on_receipt": "",
+            "matched_cod_art": "",
+            "match_method": "none",
+            "um": "BUC",
+            "cantitate": 1,
+            "pret_unitar_net": 0,
+            "valoare_net": 0,
+            "tva": 0,
+            "tva_cota": 21,
+            "cont": "604",
+            "bbox": null,
+            "notes": ""
+          },
+          "at": "2026-05-07T10:10:41.454Z"
+        }
+      ],
+      "notes": "Supplier OCTANO DOWNSTREAM SRL (RO38075752) not in nomenclator - add in SAGA first.",
+      "edits[0]": {
+        "field": "supplier.match_method",
+        "old": "none",
+        "new": "manual",
+        "at": "2026-05-07T09:58:14.471Z"
+      }
+    },
+    {
+      "id": "r002",
+      "page": 1,
+      "bbox": {
+        "x": 0.3,
+        "y": 0,
+        "w": 0.39,
+        "h": 0.65
+      },
+      "status": "ok",
+      "status_reason": null,
+      "doc_type": "F",
+      "doc_number": "8700681085",
+      "date": "2026-02-03",
+      "supplier": {
+        "name_on_receipt": "DEDEMAN SRL",
+        "cif_on_receipt": "RO2816464",
+        "matched_cod": "00002",
+        "match_method": "cif",
+        "bbox": {
+          "x": 0.36,
+          "y": 0.012,
+          "w": 0.27,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 102.93,
+        "tva": 21.62,
+        "total": 124.55,
+        "bbox": {
+          "x": 0.3,
+          "y": 0.27,
+          "w": 0.36,
+          "h": 0.06
+        }
+      },
+      "lines": [
+        {
+          "id": "r002-l1",
+          "den_art": "CLESTE REGL CU FALCI 240",
+          "cod_art_on_receipt": "27817",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 27.83,
+          "valoare_net": 27.83,
+          "tva": 5.84,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": {
+            "x": 0.3,
+            "y": 0.18,
+            "w": 0.36,
+            "h": 0.04
+          },
+          "notes": ""
+        },
+        {
+          "id": "r002-l2",
+          "den_art": "ROLA CU JANTA OTEL 200M/205KG",
+          "cod_art_on_receipt": "51719",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 2,
+          "pret_unitar_net": 37.55,
+          "valoare_net": 75.1,
+          "tva": 15.78,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": {
+            "x": 0.3,
+            "y": 0.22,
+            "w": 0.36,
+            "h": 0.04
+          },
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": ""
+    },
+    {
+      "id": "r003",
+      "page": 1,
+      "bbox": {
+        "x": 0.65,
+        "y": 0,
+        "w": 0.32,
+        "h": 0.42
+      },
+      "status": "needs_attention",
+      "status_reason": "supplier_not_found",
+      "doc_type": "B",
+      "doc_number": "0009",
+      "date": "2026-03-04",
+      "supplier": {
+        "name_on_receipt": "SC RD ARRIES CON SRL",
+        "cif_on_receipt": "RO27685763",
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": {
+          "x": 0.68,
+          "y": 0.04,
+          "w": 0.27,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 33.88,
+        "tva": 7.12,
+        "total": 41,
+        "bbox": {
+          "x": 0.65,
+          "y": 0.16,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "lines": [
+        {
+          "id": "r003-l1",
+          "den_art": "SCULE",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 33.88,
+          "valoare_net": 33.88,
+          "tva": 7.12,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": {
+            "x": 0.65,
+            "y": 0.12,
+            "w": 0.3,
+            "h": 0.04
+          },
+          "notes": "Generic 'SCULE' description - confirm category"
+        }
+      ],
+      "edits": [],
+      "notes": "Supplier SC RD ARRIES CON SRL (RO27685763) not in nomenclator."
+    },
+    {
+      "id": "r004",
+      "page": 1,
+      "bbox": {
+        "x": 0.04,
+        "y": 0.62,
+        "w": 0.32,
+        "h": 0.36
+      },
+      "status": "needs_attention",
+      "status_reason": "supplier_not_found",
+      "doc_type": "B",
+      "doc_number": "0010",
+      "date": "2026-03-04",
+      "supplier": {
+        "name_on_receipt": "SC RD ARRIES CON SRL",
+        "cif_on_receipt": "RO27685763",
+        "matched_cod": null,
+        "match_method": "none",
+        "bbox": {
+          "x": 0.07,
+          "y": 0.66,
+          "w": 0.27,
+          "h": 0.05
+        }
+      },
+      "totals": {
+        "valoare_net": 9.92,
+        "tva": 2.08,
+        "total": 12,
+        "bbox": {
+          "x": 0.04,
+          "y": 0.78,
+          "w": 0.3,
+          "h": 0.05
+        }
+      },
+      "lines": [
+        {
+          "id": "r004-l1",
+          "den_art": "SCULE",
+          "cod_art_on_receipt": "",
+          "matched_cod_art": "",
+          "match_method": "none",
+          "um": "BUC",
+          "cantitate": 1,
+          "pret_unitar_net": 9.92,
+          "valoare_net": 9.92,
+          "tva": 2.08,
+          "tva_cota": 21,
+          "cont": "604",
+          "bbox": {
+            "x": 0.04,
+            "y": 0.74,
+            "w": 0.3,
+            "h": 0.04
+          },
+          "notes": ""
+        }
+      ],
+      "edits": [],
+      "notes": "Same supplier as r003 - also needs supplier added in SAGA."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+SAGA Import Observations - Intrari DBF
+========================================
+
+Format
+------
+- SAGA uses Visual FoxPro DBF (version byte 0x30) for import
+- Header length: 1064 bytes (32 + 24 fields * 32 + terminator + 263-byte VFP backlist)
+- Record length: 486 bytes (1 deletion flag + 485 data)
+- Schema for IN_*.DBF (Intrari = facturi & bonuri de casa & avize) has 24 fields:
+  NR_NIR, NR_INTRARE, GESTIUNE, DEN_GEST, COD, DATA, SCADENT, TIP, TVAI,
+  COD_ART, DEN_TIP, TIP_O, DEN_ART, TVA_ART, UM, CANTITATE, VALOARE, TVA,
+  CONT, PRET_VANZ, GRUPA, TIP_DED, TEXT_SUPL, _NullFlags
+- One DBF row = one document line. Header fields (NR_INTRARE, COD, DATA, TIP) are
+  repeated on every line of the same document.
+- TIP values: B = Bon de casa, F = Bon de casa cu cod fiscal, space = Factura, etc.
+- DATA / SCADENT format: YYYYMMDD as 8-char string
+
+Filename
+--------
+- SAGA dispatches imports by filename prefix. The Intrari import requires the
+  file to be named IN_*.DBF (e.g. IN_01-04-2017_01-01-2026_36857.DBF).
+- The middle date/id parts of the name appear cosmetic; only the IN_ prefix is
+  load-bearing.
+- Same convention likely holds for furnizori (FURN_*?), articole (ART_*?), etc.
+- Files must live in the company-specific export folder, e.g.
+  C:\SAGA C.3.0\export\<company_folder>\
+
+Tested Behaviors (4 incremental imports)
+----------------------------------------
+test.DBF  - real suppliers + real articles                    -> OK, all imported
+test2.DBF - fake supplier codes + fake article codes          -> REJECTED entirely
+            Error: "Exista coduri de furnizori care nu se regasesc in lista
+            existenta. ... Importul nu s-a realizat."
+test3.DBF - real suppliers + fake article codes               -> OK, but articles
+            are NOT auto-created in the nomenclator. Lines come in as free-text
+            references using DEN_ART + UM + DEN_TIP from the DBF.
+test4.DBF - real suppliers + EMPTY article codes (COD_ART="") -> OK, lines come
+            in as pure free-text. Cleanest path for receipts where we have no
+            SKU to link to.
+
+Conclusions for the Pipeline
+----------------------------
+1. SUPPLIERS are a hard requirement. Any unknown supplier code aborts the
+   entire import. So step 1 of the pipeline must be: ensure every supplier
+   on the bonuri exists in furnizori (match by CIF; push missing ones).
+2. ARTICLES are soft. We can leave COD_ART empty and just provide DEN_ART text
+   per line. SAGA accepts it, the document/line goes in correctly, and the
+   accounting accounts (CONT) are honored per line. The trade-off: the article
+   is not added to the nomenclator and won't appear in stock reports. For
+   bonuri fiscale (where we care about cont contabil + valoare, not stock
+   tracking), this is acceptable.
+3. End result: a 2-step pipeline:
+   step 1 -> push missing suppliers (FURN_*.DBF or equivalent, schema TBD)
+   step 2 -> push the Intrari DBF (IN_*.DBF) with COD_ART="" per line
+
+Wishlist / Improvement
+----------------------
+- It would be nice if the converter ALSO tried to match by article code (or
+  by article name as a fallback) against the existing articole.CSV before
+  defaulting to empty COD_ART. Logic:
+    - If the receipt line has a "Cod produs" and that cod exists in
+      articole.CSV   -> use it as COD_ART (link to existing article).
+    - Else if the article name matches (case-insensitive, trimmed) an entry
+      in articole.CSV -> use that COD_ART.
+    - Else -> leave COD_ART empty (works as confirmed in test4).
+  This way recurring purchases progressively link back to real nomenclator
+  entries, while one-off items stay as free-text. Best of both worlds.
+
+Open Questions
+--------------
+- DBF schema for furnizori (FURN_*.DBF?) and articole (ART_*.DBF?) - need to
+  do an export from SAGA the same way we did for Intrari to read the schema
+  exactly. Guessing from the CSV columns is risky (field lengths, types).
+- Whether SAGA accepts updates to existing documents via re-import (matching
+  by NR_INTRARE + DATA per the "Coloane sincronizare" column in the import
+  window), or only inserts new ones.
+- TVAI / TVA_ART integer fields - encoding for cota TVA still unclear (showed
+  as 0 in all sample exports). May be cota code rather than percentage.

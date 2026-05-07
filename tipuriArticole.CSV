@@ -1,0 +1,23 @@
+cod,denumire,cont,diferente,cont_4428,cont_che,cont_ven,aprov,cons,vandabil,produs,nestocat
+"01","Marfuri","371","378","4428","607","707",1,0,1,0,0
+"02","Materii prime","301","308","","601","",1,1,0,0,0
+"03","Materiale auxiliare","3021","","","6021","",1,1,0,0,0
+"04","Produse finite","345","348","","711","7015",0,0,1,1,0
+"05","Ambalaje","381","388","","608","708",1,0,1,0,0
+"06","Obiecte de inventar","303","","","603","",1,0,0,0,0
+"07","Produse reziduale","346","348","","711","703",0,0,1,1,0
+"08","Semifabricate","341","348","","711","702",0,1,1,1,0
+"09","Amenajari provizorii","323","","","603","",1,0,0,0,0
+"10","Mat. spre prelucrare","8032","","","999","",1,0,0,0,0
+"11","Mat. în pastrare/consig.","8033","","","999","",1,0,0,0,0
+"12","Discount financiar intrari","767","","","","",1,0,0,0,1
+"13","Discount financiar iesiri","667","","","","667",0,0,1,0,1
+"14","Combustibili","3022","","","6022","",1,1,0,0,0
+"15","Piese de schimb","3024","","","6024","",1,1,0,0,0
+"16","Alte mat. consumabile","3028","","","6028","",1,1,0,0,0
+"17","Servicii vandute","704.01","","","","704.01",0,0,1,0,1
+"18","Discount comercial intrari","609","","","","",1,0,0,0,1
+"19","Discount comercial iesiri","709","","","","709",0,0,1,0,1
+"20","Servicii","332","","","712","704.01",0,0,0,1,1
+"GR","Ambalaje SGR","461.SGR","","","","461.SGR",1,0,1,0,1
+"TV","Taxa verde","447","","","","447",0,0,1,0,1
