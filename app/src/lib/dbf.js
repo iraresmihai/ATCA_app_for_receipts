@@ -135,13 +135,20 @@ function buildRecord(doc, line) {
   return out;
 }
 
+// SAGA expects supplier codes to be at least 5 digits — pad numeric codes with leading zeros.
+function padSupplierCod(cod) {
+  const s = (cod ?? '').toString().trim();
+  if (!s) return '';
+  return /^\d+$/.test(s) ? s.padStart(5, '0') : s;
+}
+
 // Convert a JSON receipt to {doc, lines[]} ready for buildRecord.
 function receiptToRows(receipt, nrNir) {
   const yyyymmdd = (receipt.date ?? '').replace(/-/g, ''); // 2026-03-01 -> 20260301
   const doc = {
     nr_nir: nrNir,
     nr_intrare: receipt.doc_number ?? '',
-    cod: receipt.supplier?.matched_cod ?? '',
+    cod: padSupplierCod(receipt.supplier?.matched_cod),
     data: yyyymmdd,
     tip: receipt.doc_type ?? ' '
   };
