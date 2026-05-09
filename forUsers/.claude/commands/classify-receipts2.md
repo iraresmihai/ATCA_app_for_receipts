@@ -17,6 +17,7 @@ Process the scanned PDF at `$1` into a JSON file ready for the receipts-review a
    If you cannot find it, STOP and ask the user for the client name + CIF.
 3. **`furnizori.CSV`**: same folder as `client.json`. Has columns including `cod`, `denumire`, `cod_fiscal`. Used to match suppliers.
 4. **`articole.CSV`** (optional, articles which are existing in the articole.csv should have the code in the final json, but it's not a problem if some articles don't have a code at all): same folder. Has columns including `cod`, `denumire`, `um`, `tip`. Used to match articles.
+5. **`tipuriArticole.CSV`**: same folder. Contains the types an article can have (columns include `cod`, `denumire`). **You MUST NOT choose a type.** Picking the article's `tip` is a human-only decision made later in the review app — leave `lines[i].tip` as `""` on every line. The app and DBF emitter treat empty as `"Nedefinit"`. This rule applies even when the type seems obvious (e.g. fuel, piese auto): still leave it blank.
 
 ## Output
 
@@ -73,6 +74,7 @@ For each fiscal receipt visible in the PDF (multiple per page is normal):
 - `pret_unitar_net`, `valoare_net`: NET (without TVA). If the receipt only shows gross, divide by `(1 + tva_cota/100)`.
 - `tva`, `tva_cota`: TVA value and cota (Romania 2026: usually `21`, sometimes `9` or `5`).
 - `cont`: pick from the table below.
+- `tip`: always `""`. **Do not infer or copy from `articole.CSV`.** The human reviewer assigns the type in the app — see input #5.
 - `notes`: anything ambiguous; `""` otherwise.
 
 ### Bounding boxes

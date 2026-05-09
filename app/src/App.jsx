@@ -4,7 +4,7 @@ import PdfViewer from './components/PdfViewer.jsx';
 import DetailsPanel from './components/DetailsPanel.jsx';
 import Splitter from './components/Splitter.jsx';
 import StatusTabs from './components/StatusTabs.jsx';
-import { applyEdit, addLine, removeLine, undoLastEdit, recalcTotals, recalcLine } from './lib/edits.js';
+import { applyEdit, addLine, removeLine, undoLastEdit, recalcTotals, recalcLine, recalcLineFromGross } from './lib/edits.js';
 import { parseCsv } from './lib/csv.js';
 import { buildDbfBytes, partitionForExport } from './lib/dbf.js';
 import { findMissingSuppliers, buildMissingSuppliersXlsx } from './lib/missingSuppliers.js';
@@ -37,9 +37,18 @@ export default function App() {
     const buf = await window.api.readPdf(pdfAbs);
     setPdfData(buf);
 
-    // Auto-load furnizori.CSV from same directory if present, else fall back to snapshots
-    const furnText = await window.api.readTextIfExists(`${r.dir}\\furnizori.CSV`)
-      ?? await window.api.readTextIfExists(`${r.dir}\\furnizori.csv`);
+    // Walk up from the JSON's folder until we find furnizori.CSV. The typical
+    // layout puts the CSV in the client folder, one level above the batch folder.
+    let dir = r.dir;
+    let furnText = null;
+    for (let i = 0; i < 5 && !furnText; i++) {
+      furnText = await window.api.readTextIfExists(`${dir}\\furnizori.CSV`)
+              ?? await window.api.readTextIfExists(`${dir}\\furnizori.csv`);
+      if (furnText) break;
+      const parent = dir.replace(/[\\/][^\\/]+$/, '');
+      if (parent === dir) break;
+      dir = parent;
+    }
     if (furnText) {
       const rows = parseCsv(furnText).map(row => ({
         cod: row.cod,
@@ -48,7 +57,8 @@ export default function App() {
       }));
       setAllSuppliers(rows);
     } else {
-      setAllSuppliers(r.data.snapshots?.suppliers ?? []);
+      setAllSuppliers([]);
+      alert('furnizori.CSV not found near this JSON — supplier picker will be empty.');
     }
   }
 
@@ -343,8 +353,25 @@ export default function App() {
             hoveredLineId={hoveredLineId}
             onHoverLine={setHoveredLineId}
             onEdit={(path, value) => updateReceipt(selected.id, r => {
-              let next = applyEdit(r, path, value);
               const m = path.match(/^lines\[(\d+)\]\.(.+)$/);
+              // Synthetic "gross" field — not persisted; we split it into net/tva on the fly.
+              if (m && m[2] === 'gross') {
+                const idx = Number(m[1]);
+                const oldLine = r.lines[idx];
+                const round = (x) => Math.round(x * 100) / 100;
+                const oldGross = round((Number(oldLine.valoare_net) || 0) + (Number(oldLine.tva) || 0));
+                const updated = recalcLineFromGross(oldLine, value);
+                const next = {
+                  ...r,
+                  lines: r.lines.map((l, i) => i === idx ? updated : l),
+                  edits: [
+                    ...(r.edits ?? []),
+                    { field: path, old: oldGross, new: Number(value) || 0, at: new Date().toISOString() }
+                  ]
+                };
+                return recalcTotals(next);
+              }
+              let next = applyEdit(r, path, value);
               if (m) {
                 const idx = Number(m[1]);
                 const updated = recalcLine(next.lines[idx], m[2]);

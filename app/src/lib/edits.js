@@ -71,6 +71,7 @@ export function addLine(receipt) {
     tva: 0,
     tva_cota: 21,
     cont: '604',
+    tip: '',
     bbox: null,
     notes: ''
   };
@@ -115,6 +116,19 @@ export function recalcLine(line, changedField) {
     return line;
   }
   return { ...line, pret_unitar_net: pret, valoare_net: val, tva };
+}
+
+// Inverse of recalcLine: user edited the gross total, split it back into net/tva
+// using the current cota, and refresh pret_unitar_net so the column stays consistent.
+export function recalcLineFromGross(line, gross) {
+  const round = (x) => Math.round(x * 100) / 100;
+  const cota = Number(line.tva_cota) || 0;
+  const cant = Number(line.cantitate) || 0;
+  const total = Number(gross) || 0;
+  const net = round(total / (1 + cota / 100));
+  const tva = round(total - net);
+  const pret = cant !== 0 ? round(net / cant) : (Number(line.pret_unitar_net) || 0);
+  return { ...line, valoare_net: net, tva, pret_unitar_net: pret };
 }
 
 // Re-derive receipt totals from the current lines. Intentionally silent (no edit log entry)

@@ -15,11 +15,6 @@ One JSON file per scanned PDF. Produced by Claude (vision step), consumed and ed
   "created_at": "2026-05-07T11:30:00Z",
   "model": "claude-opus-4-7",
 
-  "snapshots": {
-    "suppliers": [ /* only suppliers referenced in this batch */ ],
-    "articles":  [ /* only articles referenced in this batch */ ]
-  },
-
   "receipts": [ /* one entry per receipt found in the PDF */ ]
 }
 ```
@@ -33,24 +28,9 @@ One JSON file per scanned PDF. Produced by Claude (vision step), consumed and ed
 | `client` | object | The client this batch belongs to (name + CIF). Used to detect receipts that were scanned in by mistake for the wrong client. |
 | `created_at` | ISO 8601 | When Claude produced this JSON. |
 | `model` | string | Which Claude model produced it (audit trail). |
-| `snapshots` | object | Frozen copy of suppliers + articles referenced by this batch (see below). Makes the JSON reproducible even if the master CSVs change later. |
 | `receipts` | array | One entry per receipt found on the PDF. |
 
-## `snapshots`
-
-Only the suppliers and articles that are referenced (matched) by at least one receipt in this batch. Not the full catalog — keeps the JSON small.
-
-```json
-"snapshots": {
-  "suppliers": [
-    { "cod": "00042", "denumire": "OCTANO DOWNSTREAM SRL", "cif": "RO38075752" },
-    { "cod": "00002", "denumire": "DEDEMAN SRL", "cif": "RO2816464" }
-  ],
-  "articles": [
-    { "cod": "00000001", "denumire": "STAMPILA", "um": "BUC", "tip": "06" }
-  ]
-}
-```
+The review app reads `furnizori.CSV` (and `articole.CSV`) live from the client folder when the batch is opened — there is no frozen snapshot in the JSON. Since those CSVs are append-only, the live copy is always at least as complete as any snapshot would be.
 
 ## `receipts[]`
 
@@ -97,7 +77,7 @@ Only the suppliers and articles that are referenced (matched) by at least one re
 | `bbox` | bbox or null | Receipt-level bounding box used by the app to scroll/highlight. |
 | `status` | enum | `ok` \| `needs_attention` \| `deleted`. Only `ok` receipts go into the DBF. |
 | `status_reason` | enum or null | Required when `status != "ok"`. See enum below. |
-| `doc_type` | char | SAGA `TIP` value: `B` (bon de casa), `F` (bon de casa cu cod fiscal), `" "` (factura), etc. |
+| `doc_type` | char | SAGA `TIP` value: `B` (bon de casa), `C` (bon de casa cu cod fiscal), `" "` (factura), etc. |
 | `doc_number` | string or null | Document number printed on the receipt (`NR_INTRARE` in DBF). |
 | `date` | YYYY-MM-DD | Document date. |
 | `supplier` | object | See below. |
@@ -124,7 +104,7 @@ Only the suppliers and articles that are referenced (matched) by at least one re
 |---|---|
 | `name_on_receipt` | Raw name as Claude read it from the PDF. Kept even after matching. |
 | `cif_on_receipt` | Raw CIF as Claude read it (may be null). |
-| `matched_cod` | Internal SAGA `cod` (string, e.g. `"00042"`) if matched, else null. |
+| `matched_cod` | Internal SAGA `cod` (string, **always 5 digits, zero-padded**, e.g. `"00042"`, `"00002"`) if matched, else null. |
 | `match_method` | `cif` \| `name_exact` \| `name_fuzzy` \| `none`. |
 | `bbox` | Where on the page the supplier name was found (or null). |
 
@@ -182,7 +162,7 @@ Every change made in the review app appends an entry. Lets us see what humans co
 | `pret_unitar_net` | number | Unit price net (without TVA). Romanian receipts print gross — Claude must split. |
 | `valoare_net` | number | Line value net. |
 | `tva` | number | TVA value for the line. |
-| `tva_cota` | number | TVA percentage (`21`, `9`, `5`, `0`). Stored as percent; converter encodes to SAGA's `TVAI` field at DBF emit time. |
+| `tva_cota` | number | TVA percentage (`21`, `9`, `5`, `0`). Stored as percent; written into SAGA's `TVA_ART` field at DBF emit time (`TVAI` is hardcoded to `0`, matching real SAGA exports). |
 | `cont` | string | Cont contabil for this line (`6022`, `604`, `303`, ...). One per line, not per receipt. |
 | `bbox` | bbox or null | Where on the page this specific line is. |
 | `notes` | string | Free text. |
@@ -237,7 +217,7 @@ When the review app exports `IN_*.DBF`:
 
 - Only receipts with `status == "ok"` are emitted.
 - One DBF row per `lines[]` entry. Header fields (`NR_INTRARE`, `COD`, `DATA`, `TIP`) are repeated on every line of the same receipt.
-- `COD` (supplier) ← `supplier.matched_cod`. If null → receipt should never have been `ok`; emit step rejects it.
+- `COD` (supplier) ← `supplier.matched_cod`, zero-padded to 5 digits if numeric (`1` → `00001`). If null → receipt should never have been `ok`; emit step rejects it.
 - `COD_ART` ← `lines[i].matched_cod_art` (may be empty string — SAGA accepts that, see SAGA_observations.txt).
 - `DEN_ART`, `UM`, `CANTITATE`, `VALOARE`, `TVA`, `CONT` ← directly from line.
 - `DATA`, `SCADENT` ← `date`, formatted as `YYYYMMDD`.

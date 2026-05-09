@@ -2,10 +2,16 @@ import React from 'react';
 import EditableField from './EditableField.jsx';
 import SupplierPicker from './SupplierPicker.jsx';
 import StatusBar from './StatusBar.jsx';
+import { TIPURI_ARTICOLE } from '../lib/tipuriArticole.js';
+
+const TIP_OPTIONS = [
+  { value: '', label: 'Nedefinit' },
+  ...TIPURI_ARTICOLE.map(t => ({ value: t.cod, label: `${t.cod} — ${t.denumire}` }))
+];
 
 const DOC_TYPES = [
   { value: 'B', label: 'B - Bon de casa' },
-  { value: 'F', label: 'F - Bon cu cod fiscal' },
+  { value: 'C', label: 'C - Bon cu cod fiscal' },
   { value: ' ', label: '(space) - Factura' },
   { value: 'A', label: 'A - Aviz' },
   { value: 'T', label: 'T - Taxare inversa' }
@@ -57,6 +63,18 @@ const UM_OPTIONS = [
   ['HA',    'Hectometru patrat'],
   ['FOAIE', 'Foaie / coala']
 ].map(([value, label]) => ({ value, label: `${value} — ${label}` }));
+
+function ReadOnlyField({ label, value }) {
+  const display = value == null ? '—' : (typeof value === 'number' ? value.toFixed(2) : String(value));
+  return (
+    <div className="flex items-center gap-2 py-1">
+      <span className="text-xs text-slate-500 w-20 shrink-0">{label}</span>
+      <div className="flex-1 px-2 py-1 text-sm font-mono bg-slate-50 border border-slate-200 rounded text-slate-700">
+        {display}
+      </div>
+    </div>
+  );
+}
 
 export default function DetailsPanel({
   receipt,
@@ -113,19 +131,12 @@ export default function DetailsPanel({
       </section>
 
       <section>
-        <h2 className="text-xs uppercase tracking-wide text-slate-500 mb-1">Totals</h2>
-        <EditableField
-          label="Net" type="number" value={receipt.totals.valoare_net}
-          onCommit={v => onEdit('totals.valoare_net', v)}
-        />
-        <EditableField
-          label="TVA" type="number" value={receipt.totals.tva}
-          onCommit={v => onEdit('totals.tva', v)}
-        />
-        <EditableField
-          label="Total" type="number" value={receipt.totals.total}
-          onCommit={v => onEdit('totals.total', v)}
-        />
+        <h2 className="text-xs uppercase tracking-wide text-slate-500 mb-1">
+          Totals <span className="text-slate-400 normal-case">(derived from lines)</span>
+        </h2>
+        <ReadOnlyField label="Net"   value={receipt.totals.valoare_net} />
+        <ReadOnlyField label="TVA"   value={receipt.totals.tva} />
+        <ReadOnlyField label="Total" value={receipt.totals.total} />
       </section>
 
       <section>
@@ -192,6 +203,15 @@ export default function DetailsPanel({
                     onCommit={v => onEdit(`lines[${i}].tva_cota`, Number(v))}
                   />
                 </div>
+                <EditableField
+                  label="Total" type="number"
+                  value={Math.round(((Number(l.valoare_net) || 0) + (Number(l.tva) || 0)) * 100) / 100}
+                  onCommit={v => onEdit(`lines[${i}].gross`, v)}
+                />
+                <EditableField
+                  label="Tip" value={l.tip ?? ''} options={TIP_OPTIONS}
+                  onCommit={v => onEdit(`lines[${i}].tip`, v)}
+                />
                 <EditableField
                   label="Cont" value={l.cont}
                   onCommit={v => onEdit(`lines[${i}].cont`, v)}

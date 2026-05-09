@@ -1,6 +1,8 @@
 // Build a Visual FoxPro DBF in the SAGA "Intrari" schema.
 // Schema reverse-engineered from a real export (see SAGA_observations.txt + schema.md).
 
+import { denTipFromCod } from './tipuriArticole.js';
+
 // 5th column = VFP field flags byte (byte 18 of the descriptor):
 //   0x02 = can store nulls; 0x04 = binary/system blob; 0x01 = system column.
 //   _NullFlags is the per-record null bitmap (system + binary = 0x05).
@@ -156,7 +158,7 @@ function receiptToRows(receipt, nrNir) {
     gestiune: '',
     den_gest: '',
     cod_art: l.matched_cod_art ?? '',
-    den_tip: 'Nedefinit',
+    den_tip: denTipFromCod(l.tip),
     den_art: l.den_art ?? '',
     um: l.um ?? '',
     cantitate: Number(l.cantitate) || 0,
