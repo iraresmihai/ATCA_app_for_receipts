@@ -86,7 +86,8 @@ export default function DetailsPanel({
   onAddLine,
   onRemoveLine,
   onUndo,
-  allSuppliers = []
+  allSuppliers = [],
+  onCreateSupplier
 }) {
   if (!receipt) return <div className="p-4 text-slate-500">Select a receipt</div>;
 
@@ -124,6 +125,7 @@ export default function DetailsPanel({
           value={receipt.supplier.matched_cod}
           suppliers={allSuppliers}
           onPick={onPickSupplier}
+          onCreate={onCreateSupplier}
         />
         <div className="text-xs text-slate-500 pl-22 -mt-1">
           Match: <span className="font-mono">{receipt.supplier.match_method}</span>

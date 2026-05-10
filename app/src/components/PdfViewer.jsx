@@ -25,6 +25,15 @@ function rotateBbox(bbox, rot) {
   return { x, y, w, h };
 }
 
+// Rotate a page-relative point. Same convention as rotateBbox.
+function rotatePoint(x, y, rot) {
+  const r = ((rot % 360) + 360) % 360;
+  if (r === 90)  return { x: 1 - y, y: x };
+  if (r === 180) return { x: 1 - x, y: 1 - y };
+  if (r === 270) return { x: y,     y: 1 - x };
+  return { x, y };
+}
+
 function BBoxOverlay({ bbox, kind = 'receipt', label }) {
   if (!bbox) return null;
   const c = COLORS[kind] || COLORS.receipt;
@@ -47,7 +56,12 @@ function BBoxOverlay({ bbox, kind = 'receipt', label }) {
   );
 }
 
-export default function PdfViewer({ pdfData, page, overlays = [], drawMode = false, onDrawComplete, onCancelDraw }) {
+export default function PdfViewer({
+  pdfData, page, overlays = [],
+  drawMode = false, onDrawComplete, onCancelDraw,
+  annotations = [], annotationTool = null,
+  onPlaceAnnotation, onRemoveAnnotation, onCancelAnnotation
+}) {
   const [file, setFile] = useState(null);
   const [numPages, setNumPages] = useState(0);
   const [rotations, setRotations] = useState({}); // { [pageNumber]: 0|90|180|270 }
@@ -61,12 +75,16 @@ export default function PdfViewer({ pdfData, page, overlays = [], drawMode = fal
   // Cancel any in-progress draw if drawMode flips off.
   useEffect(() => { if (!drawMode) setDraw(null); }, [drawMode]);
 
-  // Esc cancels draw mode.
+  // Esc cancels draw mode or annotation placement.
   useEffect(() => {
-    function onKey(e) { if (e.key === 'Escape' && drawMode) { setDraw(null); onCancelDraw?.(); } }
+    function onKey(e) {
+      if (e.key !== 'Escape') return;
+      if (drawMode) { setDraw(null); onCancelDraw?.(); }
+      if (annotationTool) onCancelAnnotation?.();
+    }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [drawMode, onCancelDraw]);
+  }, [drawMode, onCancelDraw, annotationTool, onCancelAnnotation]);
 
   // Scroll to the selected receipt's page when the selection changes.
   useEffect(() => {
@@ -105,6 +123,15 @@ export default function PdfViewer({ pdfData, page, overlays = [], drawMode = fal
     setDraw(d => ({ ...d, x1: pt.x, y1: pt.y }));
   }
 
+  function onAnnotationClick(e, p) {
+    if (!annotationTool) return;
+    const pt = pointFromEvent(e, p);
+    if (!pt) return;
+    const rot = rotations[p] ?? 0;
+    const original = rotatePoint(pt.x, pt.y, (360 - rot) % 360);
+    onPlaceAnnotation?.(p, original.x, original.y);
+  }
+
   function onPointerUp(e, p) {
     if (!drawMode || !draw || draw.page !== p) return;
     const x = Math.min(draw.x0, draw.x1);
@@ -127,6 +154,14 @@ export default function PdfViewer({ pdfData, page, overlays = [], drawMode = fal
       {drawMode && (
         <div className="sticky top-0 z-20 bg-purple-600 text-white text-sm px-4 py-2 rounded-b shadow self-stretch text-center">
           ✎ Drawing mode — click and drag on any page to add a receipt. Press Esc to cancel.
+        </div>
+      )}
+      {annotationTool && (
+        <div className={`sticky top-0 z-20 text-white text-sm px-4 py-2 rounded-b shadow self-stretch text-center ${
+          annotationTool === 'check' ? 'bg-emerald-600' : 'bg-rose-600'
+        }`}>
+          {annotationTool === 'check' ? '✓' : '✗'} Click anywhere on a page to place a mark.
+          Click an existing mark to remove it. Press Esc when done.
         </div>
       )}
       <Document
@@ -184,11 +219,16 @@ export default function PdfViewer({ pdfData, page, overlays = [], drawMode = fal
                 />
                 <div
                   ref={el => { if (el) drawAreaRefs.current[p] = el; }}
-                  className={`absolute inset-0 ${drawMode ? 'cursor-crosshair' : 'pointer-events-none'}`}
+                  className={`absolute inset-0 ${
+                    drawMode ? 'cursor-crosshair' :
+                    annotationTool ? 'cursor-copy' :
+                    'pointer-events-none'
+                  }`}
                   onPointerDown={(e) => onPointerDown(e, p)}
                   onPointerMove={(e) => onPointerMove(e, p)}
                   onPointerUp={(e) => onPointerUp(e, p)}
                   onPointerCancel={() => setDraw(null)}
+                  onClick={(e) => onAnnotationClick(e, p)}
                 >
                   {isActive && overlays.map((o, i) => (
                     <BBoxOverlay
@@ -198,6 +238,29 @@ export default function PdfViewer({ pdfData, page, overlays = [], drawMode = fal
                       label={o.label}
                     />
                   ))}
+                  {annotations.filter(a => a.page === p).map(a => {
+                    const rp = rotatePoint(a.x, a.y, rot);
+                    const isCheck = a.kind === 'check';
+                    return (
+                      <button
+                        key={a.id}
+                        onClick={(e) => { e.stopPropagation(); onRemoveAnnotation?.(a.id); }}
+                        className={`absolute pointer-events-auto rounded-full font-bold flex items-center justify-center shadow-lg border-2 border-white text-white text-lg leading-none ${
+                          isCheck ? 'bg-emerald-500 hover:bg-emerald-400'
+                                  : 'bg-rose-600 hover:bg-rose-500'
+                        }`}
+                        style={{
+                          left: `${rp.x * 100}%`,
+                          top:  `${rp.y * 100}%`,
+                          width: '36px', height: '36px',
+                          transform: 'translate(-50%, -50%)'
+                        }}
+                        title="Click to remove this mark"
+                      >
+                        {isCheck ? '✓' : '✗'}
+                      </button>
+                    );
+                  })}
                   {isDrawingHere && (
                     <div
                       className="absolute border-2 border-purple-600 bg-purple-500/25 rounded-sm pointer-events-none"

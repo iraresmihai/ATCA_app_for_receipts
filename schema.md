@@ -15,7 +15,8 @@ One JSON file per scanned PDF. Produced by Claude (vision step), consumed and ed
   "created_at": "2026-05-07T11:30:00Z",
   "model": "claude-opus-4-7",
 
-  "receipts": [ /* one entry per receipt found in the PDF */ ]
+  "receipts": [ /* one entry per receipt found in the PDF */ ],
+  "annotations": [ /* human-placed marks on the PDF — see below */ ]
 }
 ```
 
@@ -29,6 +30,7 @@ One JSON file per scanned PDF. Produced by Claude (vision step), consumed and ed
 | `created_at` | ISO 8601 | When Claude produced this JSON. |
 | `model` | string | Which Claude model produced it (audit trail). |
 | `receipts` | array | One entry per receipt found on the PDF. |
+| `annotations` | array | Optional. Green-check / red-cross marks the human reviewer placed on PDF pages. Auto-saved on every change. Empty/absent on Claude's first output; the review app initializes it on open. |
 
 The review app reads `furnizori.CSV` (and `articole.CSV`) live from the client folder when the batch is opened — there is no frozen snapshot in the JSON. Since those CSVs are append-only, the live copy is always at least as complete as any snapshot would be.
 
@@ -167,6 +169,29 @@ Every change made in the review app appends an entry. Lets us see what humans co
 | `bbox` | bbox or null | Where on the page this specific line is. |
 | `notes` | string | Free text. |
 
+## `annotations[]`
+
+Free-form marks placed by the human reviewer on PDF pages — typically a green check `✓` to confirm a receipt was reviewed and a red cross `✗` to flag something to revisit. Multiple marks per page are normal (one page can hold several receipts).
+
+```json
+{
+  "id": "a001",
+  "page": 1,
+  "kind": "check",
+  "x": 0.62,
+  "y": 0.18
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | string | Unique within the batch (`a001`, `a002`, ...). |
+| `page` | int | 1-based page number. |
+| `kind` | enum | `check` (green ✓) or `cross` (red ✗). |
+| `x`, `y` | number | Page-relative fractions in `[0, 1]`, top-left origin. Stored in the **original** (unrotated) page coordinate system, like bboxes. |
+
+The review app saves the JSON immediately whenever a mark is added or removed (no manual save needed). Annotations are never derived from receipt content; they are purely a human signal. They are not emitted to the DBF and have no effect on `status`. An "Export marked PDF" action in the app can bake them into a copy of the source PDF using `pdf-lib`.
+
 ## Bounding boxes
 
 All bboxes use page-relative fractions in `[0, 1]`:
@@ -205,21 +230,67 @@ clients/
     furnizori.CSV
     articole.CSV
     <batch-folder>/
-      receipts.pdf      ← the monthly scan
-      receipts.json     ← produced by the prompt; consumed by the review app
+      receipts.pdf                              ← the monthly scan
+      receipts.json                             ← produced by the prompt; consumed by the review app
+      missingSuppliers_receipts.csv             ← created by the review app on open (see below)
 ```
 
 The classification prompt walks up from the PDF's folder looking for `client.json`.
 
-## DBF emission rules
+## `missingSuppliers_<jsonbase>.csv` (per-batch sidecar)
 
-When the review app exports `IN_*.DBF`:
+A small CSV the review app keeps next to the receipts JSON. Filename pattern: `missingSuppliers_<basename-of-json>.csv`. Created on open if it doesn't exist yet (header-only).
+
+```csv
+cif,denumire
+RO12345678,SOME NEW SUPPLIER SRL
+RO87654321,
+```
+
+| Column | Description |
+|---|---|
+| `cif` | The supplier's fiscal code as the user typed it (kept verbatim). Required. |
+| `denumire` | Optional human-readable name, just for the user's convenience. |
+
+Behavior:
+
+- The file is **only** appended to when the user explicitly clicks "+ Create new supplier" in the picker. It is never auto-populated from receipts. So every row is a deliberate human action.
+- The review app loads these into the supplier picker alongside `furnizori.CSV` entries (with a small `new` badge). Their `matched_cod` on a receipt is the CIF itself — that's the only stable identifier we have until SAGA assigns a real one.
+- Duplicates are blocked at create time: if the CIF already exists in `furnizori.CSV` or this CSV, the existing entry is reused instead.
+
+When the user clicks "Export data", these custom suppliers are written into the export folder as a SAGA-style XLS (see DBF emission rules below).
+
+## "Export data" output
+
+When the user clicks "Export data" in the review app:
+
+1. The user picks a parent folder.
+2. The app creates a subfolder named after the source PDF (basename without `.pdf`) and writes everything inside it. Parent directories are created on demand.
+
+Folder contents:
+
+```
+<parent>/
+  <pdf-basename>/
+    IN_<dd-mm-yyyy>_<dd-mm-yyyy>_<5digits>.DBF   ← SAGA Intrari import
+    <batch_id>_skipped.json                       ← receipts that didn't make it
+    xls-<5digits>-<5digits>.xls                   ← only when there are custom suppliers
+```
+
+### `IN_*.DBF` (Visual FoxPro)
 
 - Only receipts with `status == "ok"` are emitted.
 - One DBF row per `lines[]` entry. Header fields (`NR_INTRARE`, `COD`, `DATA`, `TIP`) are repeated on every line of the same receipt.
-- `COD` (supplier) ← `supplier.matched_cod`, zero-padded to 5 digits if numeric (`1` → `00001`). If null → receipt should never have been `ok`; emit step rejects it.
+- `COD` (supplier) ← `supplier.matched_cod`, zero-padded to 5 digits if numeric (`1` → `00001`). If null → receipt should never have been `ok`; emit step rejects it. Note: custom suppliers (created from the picker) carry their CIF as `matched_cod`; SAGA's `COD` field is 8 chars, so 10-digit CIFs may get truncated — typically the user imports the missing-suppliers XLS into SAGA first to obtain real codes before re-exporting the DBF.
 - `COD_ART` ← `lines[i].matched_cod_art` (may be empty string — SAGA accepts that, see SAGA_observations.txt).
 - `DEN_ART`, `UM`, `CANTITATE`, `VALOARE`, `TVA`, `CONT` ← directly from line.
 - `DATA`, `SCADENT` ← `date`, formatted as `YYYYMMDD`.
 - `TIP` ← `doc_type`.
-- Receipts in `needs_attention` / `deleted` are written separately to `<batch_id>_skipped.json` so parents can see what didn't make it into SAGA.
+
+### `<batch_id>_skipped.json`
+
+Receipts in `needs_attention` / `deleted` (and any `ok` receipts blocked at export, e.g. missing `matched_cod` / `lines` / `date`) are written here so the user can see what didn't make it into SAGA.
+
+### `xls-<5digits>-<5digits>.xls` (custom suppliers, BIFF8)
+
+Only written when at least one row exists in `missingSuppliers_<jsonbase>.csv`. Single sheet `furnizori` with the same column order as `furnizori.CSV` (`cod, denumire, cod_fiscal, analitic, tara, judet, localitate, adresa, cont_banca, banca, tel, email, grupa, reg_com, den_agent`). Only `denumire` and `cod_fiscal` are filled from the user's entries; every other column is blank for the user to complete in SAGA. The filename pattern (`xls-<random>-<random>.xls`) matches what SAGA expects for supplier imports.

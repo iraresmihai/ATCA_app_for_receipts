@@ -7,7 +7,8 @@ import StatusTabs from './components/StatusTabs.jsx';
 import { applyEdit, addLine, removeLine, undoLastEdit, recalcTotals, recalcLine, recalcLineFromGross } from './lib/edits.js';
 import { parseCsv } from './lib/csv.js';
 import { buildDbfBytes, partitionForExport } from './lib/dbf.js';
-import { findMissingSuppliers, buildMissingSuppliersXlsx } from './lib/missingSuppliers.js';
+import { buildMarkedPdf } from './lib/markedPdf.js';
+import { buildSuppliersXls, suppliersXlsName } from './lib/suppliersXls.js';
 
 export default function App() {
   const [batch, setBatch] = useState(null);
@@ -19,14 +20,18 @@ export default function App() {
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [allSuppliers, setAllSuppliers] = useState([]);
+  const [customSuppliers, setCustomSuppliers] = useState([]); // [{ cif, denumire }]
+  const [missingCsvPath, setMissingCsvPath] = useState(null);
   const [leftW, setLeftW] = useState(288);
   const [rightW, setRightW] = useState(440);
   const [statusFilter, setStatusFilter] = useState('all');
   const [drawMode, setDrawMode] = useState(false);
+  const [annotationTool, setAnnotationTool] = useState(null); // null | 'check' | 'cross'
 
   async function handleOpen() {
     const r = await window.api.openJson();
     if (!r) return;
+    if (!Array.isArray(r.data.annotations)) r.data.annotations = [];
     setBatch(r.data);
     setPdfDir(r.dir);
     setJsonPath(r.path);
@@ -60,6 +65,56 @@ export default function App() {
       setAllSuppliers([]);
       alert('furnizori.CSV not found near this JSON — supplier picker will be empty.');
     }
+
+    // Per-batch "missing suppliers" CSV — created next to the JSON if it doesn't
+    // exist yet. The user grows this list by adding new suppliers from the picker.
+    const jsonBase = (r.path.split(/[\\/]/).pop() ?? 'receipts.json').replace(/\.json$/i, '');
+    const missingPath = `${r.dir}\\missingSuppliers_${jsonBase}.csv`;
+    setMissingCsvPath(missingPath);
+    const existing = await window.api.readTextIfExists(missingPath);
+    if (existing == null) {
+      await window.api.writeText(missingPath, 'cif,denumire\n');
+      setCustomSuppliers([]);
+    } else {
+      const customs = parseCsv(existing)
+        .map(row => ({ cif: (row.cif ?? '').trim(), denumire: (row.denumire ?? '').trim() }))
+        .filter(s => s.cif);
+      setCustomSuppliers(customs);
+    }
+  }
+
+  function csvEscape(s) {
+    const v = (s ?? '').toString();
+    return /[",\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+  }
+
+  async function handleCreateSupplier(cif, denumire) {
+    const cleanCif = (cif ?? '').toString().trim();
+    const cleanName = (denumire ?? '').toString().trim();
+    if (!cleanCif) { alert('CIF is required.'); return null; }
+
+    const norm = (s) => s.toUpperCase().replace(/^RO/, '').replace(/\s/g, '');
+    const target = norm(cleanCif);
+
+    const inFurnizori = allSuppliers.find(s => s.cif && norm(s.cif) === target);
+    if (inFurnizori) {
+      alert(`This CIF is already in furnizori.CSV as "${inFurnizori.denumire}" (cod ${inFurnizori.cod}). Pick it from the list instead.`);
+      return inFurnizori.cod;
+    }
+    const inCustoms = customSuppliers.find(s => norm(s.cif) === target);
+    if (inCustoms) {
+      alert(`Already added: ${inCustoms.denumire || inCustoms.cif}. Selecting it.`);
+      return inCustoms.cif;
+    }
+
+    const next = [...customSuppliers, { cif: cleanCif, denumire: cleanName }];
+    setCustomSuppliers(next);
+    if (missingCsvPath) {
+      const text = ['cif,denumire', ...next.map(r => `${csvEscape(r.cif)},${csvEscape(r.denumire)}`)].join('\n') + '\n';
+      try { await window.api.writeText(missingCsvPath, text); }
+      catch (e) { console.error(e); alert('Failed to write missingSuppliers CSV — change kept in memory only.'); }
+    }
+    return cleanCif;
   }
 
   function handleChangeStatus(receiptId, status, reason) {
@@ -81,21 +136,6 @@ export default function App() {
       }
       return next;
     });
-  }
-
-  async function handleExportMissingSuppliers() {
-    if (!batch) return;
-    const missing = findMissingSuppliers(batch.receipts, allSuppliers);
-    if (missing.length === 0) {
-      alert('No missing suppliers — every supplier on a non-deleted receipt is matched.');
-      return;
-    }
-    const folder = await window.api.pickFolder();
-    if (!folder) return;
-    const name = `${batch.batch_id}_missing_suppliers.xlsx`;
-    const xlsx = buildMissingSuppliersXlsx(missing);
-    await window.api.writeBinary(`${folder}\\${name}`, xlsx.buffer ?? xlsx);
-    alert(`Wrote ${missing.length} missing supplier(s) to ${name}`);
   }
 
   async function handleExport() {
@@ -132,11 +172,13 @@ export default function App() {
     const randomCode = Math.floor(10000 + Math.random() * 90000); // 5 digits
     const dbfName = `IN_${fmt(oldDate)}_${fmt(futDate)}_${randomCode}.DBF`;
     const skipName = `${batch.batch_id}_skipped.json`;
-    const dbfPath = `${folder}\\${dbfName}`;
-    const skipPath = `${folder}\\${skipName}`;
+
+    // Subfolder named after the source PDF — everything for this batch lives here.
+    const pdfBase = (batch.pdf_path ?? 'receipts.pdf').replace(/\.pdf$/i, '');
+    const outDir = `${folder}\\${pdfBase}`;
 
     const dbfBytes = buildDbfBytes(ready);
-    await window.api.writeBinary(dbfPath, dbfBytes.buffer);
+    await window.api.writeBinary(`${outDir}\\${dbfName}`, dbfBytes.buffer);
 
     const skipped = batch.receipts.filter(r => r.status !== 'ok' || blocked.find(b => b.id === r.id));
     const skipPayload = {
@@ -145,12 +187,20 @@ export default function App() {
       blocked_at_export: blocked,
       receipts: skipped
     };
-    await window.api.writeText(skipPath, JSON.stringify(skipPayload, null, 2));
+    await window.api.writeText(`${outDir}\\${skipName}`, JSON.stringify(skipPayload, null, 2));
+
+    let xlsName = null;
+    if (customSuppliers.length > 0) {
+      xlsName = suppliersXlsName();
+      const xlsBytes = buildSuppliersXls(customSuppliers);
+      await window.api.writeBinary(`${outDir}\\${xlsName}`, xlsBytes.buffer ?? xlsBytes);
+    }
 
     alert(
-      `Exported ${ready.length} receipt(s) (${dbfBytes.length} bytes)\n` +
-      `→ ${dbfName}\n\n` +
-      `Skipped ${skipped.length} receipt(s)\n→ ${skipName}`
+      `Exported to ${outDir}\n\n` +
+      `Receipts: ${ready.length} → ${dbfName} (${dbfBytes.length} bytes)\n` +
+      `Skipped: ${skipped.length} → ${skipName}\n` +
+      (xlsName ? `New suppliers: ${customSuppliers.length} → ${xlsName}` : 'New suppliers: 0 (no XLS written)')
     );
   }
 
@@ -195,6 +245,57 @@ export default function App() {
     setDrawMode(false);
   }
 
+  function nextAnnotationId(annotations) {
+    let max = 0;
+    for (const a of annotations ?? []) {
+      const m = a.id?.match(/^a(\d+)$/);
+      if (m) max = Math.max(max, Number(m[1]));
+    }
+    return `a${String(max + 1).padStart(3, '0')}`;
+  }
+
+  function mutateBatchAndSave(mutator) {
+    setBatch(prev => {
+      if (!prev) return prev;
+      const next = mutator(prev);
+      if (jsonPath) {
+        window.api.saveJson(jsonPath, next).catch(e => console.error(e));
+      }
+      return next;
+    });
+  }
+
+  function handleAddAnnotation(page, x, y) {
+    if (!annotationTool) return;
+    mutateBatchAndSave(prev => {
+      const ann = { id: nextAnnotationId(prev.annotations), page, kind: annotationTool, x, y };
+      return { ...prev, annotations: [...(prev.annotations ?? []), ann] };
+    });
+  }
+
+  function handleRemoveAnnotation(id) {
+    mutateBatchAndSave(prev => ({
+      ...prev,
+      annotations: (prev.annotations ?? []).filter(a => a.id !== id)
+    }));
+  }
+
+  function toggleAnnotationTool(tool) {
+    setAnnotationTool(prev => (prev === tool ? null : tool));
+    setDrawMode(false);
+  }
+
+  async function handleExportMarkedPdf() {
+    if (!batch || !pdfData) return;
+    const folder = await window.api.pickFolder();
+    if (!folder) return;
+    const base = (batch.pdf_path ?? 'receipts.pdf').replace(/\.pdf$/i, '');
+    const outPath = `${folder}\\${base}_marked.pdf`;
+    const bytes = await buildMarkedPdf(pdfData, batch.annotations ?? []);
+    await window.api.writeBinary(outPath, bytes.buffer ?? bytes);
+    alert(`Wrote marked PDF (${(batch.annotations ?? []).length} mark(s)) to:\n${outPath}`);
+  }
+
   async function handleSave() {
     if (!jsonPath || !batch) return;
     setSaving(true);
@@ -219,9 +320,22 @@ export default function App() {
     [batch, selectedId]
   );
 
+  // Custom suppliers (from missingSuppliers_<base>.csv) appear in the picker
+  // with their CIF acting as the cod — that's the only stable id we have until
+  // SAGA assigns a real one.
+  const combinedSuppliers = useMemo(() => {
+    const customs = customSuppliers.map(s => ({
+      cod: s.cif,
+      denumire: s.denumire,
+      cif: s.cif,
+      __custom: true
+    }));
+    return [...allSuppliers, ...customs];
+  }, [allSuppliers, customSuppliers]);
+
   const suppliersByCod = useMemo(
-    () => Object.fromEntries(allSuppliers.map(s => [s.cod, s])),
-    [allSuppliers]
+    () => Object.fromEntries(combinedSuppliers.map(s => [s.cod, s])),
+    [combinedSuppliers]
   );
 
   const counts = useMemo(() => {
@@ -233,9 +347,14 @@ export default function App() {
 
   const visibleReceipts = useMemo(() => {
     if (!batch) return [];
-    return statusFilter === 'all'
+    const filtered = statusFilter === 'all'
       ? batch.receipts
       : batch.receipts.filter(r => r.status === statusFilter);
+    return [...filtered].sort((a, b) => {
+      const pa = a.page ?? 0, pb = b.page ?? 0;
+      if (pa !== pb) return pa - pb;
+      return (a.id ?? '').localeCompare(b.id ?? '');
+    });
   }, [batch, statusFilter]);
 
   const hoveredLine = useMemo(
@@ -279,7 +398,36 @@ export default function App() {
         {dirty && <span className="text-amber-300 text-xs">● unsaved</span>}
         <div className="ml-auto flex gap-2">
           <button
-            onClick={() => setDrawMode(d => !d)}
+            onClick={() => toggleAnnotationTool('check')}
+            className={`px-3 py-1 rounded text-sm ${
+              annotationTool === 'check'
+                ? 'bg-emerald-700 text-white ring-2 ring-emerald-300'
+                : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+            }`}
+            title="Click pages to place green check marks. Click an existing mark to remove it."
+          >
+            {annotationTool === 'check' ? '✓ Placing… (Esc)' : '✓ Mark OK'}
+          </button>
+          <button
+            onClick={() => toggleAnnotationTool('cross')}
+            className={`px-3 py-1 rounded text-sm ${
+              annotationTool === 'cross'
+                ? 'bg-rose-700 text-white ring-2 ring-rose-300'
+                : 'bg-rose-600 hover:bg-rose-500 text-white'
+            }`}
+            title="Click pages to place red cross marks. Click an existing mark to remove it."
+          >
+            {annotationTool === 'cross' ? '✗ Placing… (Esc)' : '✗ Mark wrong'}
+          </button>
+          <button
+            onClick={handleExportMarkedPdf}
+            className="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 rounded text-sm text-white"
+            title="Save a copy of the PDF with the marks baked in"
+          >
+            Export marked PDF
+          </button>
+          <button
+            onClick={() => { setDrawMode(d => !d); setAnnotationTool(null); }}
             className={`px-3 py-1 rounded text-sm ${
               drawMode
                 ? 'bg-purple-700 hover:bg-purple-600 text-white'
@@ -297,18 +445,11 @@ export default function App() {
             {saving ? 'Saving…' : 'Save'}
           </button>
           <button
-            onClick={handleExportMissingSuppliers}
-            className="px-3 py-1 bg-amber-600 hover:bg-amber-500 rounded text-sm"
-            title="Export suppliers referenced on receipts but not in furnizori.CSV"
-          >
-            Missing suppliers
-          </button>
-          <button
             onClick={handleExport}
             disabled={(counts.ok ?? 0) === 0}
             className="px-3 py-1 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-600 disabled:text-slate-400 rounded text-sm"
           >
-            Export DBF ({counts.ok ?? 0})
+            Export data ({counts.ok ?? 0})
           </button>
           <button
             onClick={handleOpen}
@@ -342,6 +483,11 @@ export default function App() {
             drawMode={drawMode}
             onDrawComplete={handleAddReceipt}
             onCancelDraw={() => setDrawMode(false)}
+            annotations={batch.annotations ?? []}
+            annotationTool={annotationTool}
+            onPlaceAnnotation={handleAddAnnotation}
+            onRemoveAnnotation={handleRemoveAnnotation}
+            onCancelAnnotation={() => setAnnotationTool(null)}
           />
         </main>
 
@@ -385,7 +531,8 @@ export default function App() {
             onAddLine={() => updateReceipt(selected.id, r => recalcTotals(addLine(r)))}
             onRemoveLine={(i) => updateReceipt(selected.id, r => recalcTotals(removeLine(r, i)))}
             onUndo={() => updateReceipt(selected.id, undoLastEdit)}
-            allSuppliers={allSuppliers}
+            allSuppliers={combinedSuppliers}
+            onCreateSupplier={handleCreateSupplier}
           />
         </aside>
       </div>

@@ -57,11 +57,13 @@ ipcMain.handle('dialog:pickFolder', async () => {
 });
 
 ipcMain.handle('file:writeBinary', async (_e, absPath, arrayBuffer) => {
+  await fs.mkdir(path.dirname(absPath), { recursive: true });
   await fs.writeFile(absPath, Buffer.from(arrayBuffer));
   return true;
 });
 
 ipcMain.handle('file:writeText', async (_e, absPath, text) => {
+  await fs.mkdir(path.dirname(absPath), { recursive: true });
   await fs.writeFile(absPath, text, 'utf8');
   return true;
 });
