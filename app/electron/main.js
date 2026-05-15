@@ -37,6 +37,15 @@ ipcMain.handle('dialog:openJson', async () => {
   return { path: jsonPath, dir: path.dirname(jsonPath), data: JSON.parse(text) };
 });
 
+ipcMain.handle('dialog:openFolders', async () => {
+  const r = await dialog.showOpenDialog({
+    title: 'Pick one or more client folders',
+    properties: ['openDirectory', 'multiSelections']
+  });
+  if (r.canceled || r.filePaths.length === 0) return null;
+  return r.filePaths;
+});
+
 ipcMain.handle('file:readPdf', async (_e, absPath) => {
   const buf = await fs.readFile(absPath);
   return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);

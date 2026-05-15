@@ -10,6 +10,7 @@ export function buildSuppliersXls(customSuppliers) {
   const rows = (customSuppliers ?? []).map(s => {
     const row = {};
     for (const c of COLUMNS) row[c] = '';
+    row.cod = s.cod ?? '';
     row.denumire = s.denumire ?? '';
     row.cod_fiscal = s.cif ?? '';
     return row;

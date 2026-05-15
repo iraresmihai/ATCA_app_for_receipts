@@ -1,0 +1,13 @@
+{
+  "name": "app-for-folders",
+  "version": "1.0.0",
+  "description": "Pick client folders and write their receipts.pdf paths into .claude/allPdf.txt for /classify-receipts3",
+  "main": "electron/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^32.0.0"
+  }
+}

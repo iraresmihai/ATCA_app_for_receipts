@@ -2,6 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
   openJson: () => ipcRenderer.invoke('dialog:openJson'),
+  openFolders: () => ipcRenderer.invoke('dialog:openFolders'),
   readPdf: (absPath) => ipcRenderer.invoke('file:readPdf', absPath),
   saveJson: (absPath, data) => ipcRenderer.invoke('file:saveJson', absPath, data),
   readTextIfExists: (absPath) => ipcRenderer.invoke('file:readTextIfExists', absPath),

@@ -1,2 +1,10 @@
 # Real client data — never commit
 secondSim/
+forUsers/spicy/
+forUsers/spicy - Copy/
+
+# Locally generated list of PDF paths (absolute paths to local client folders)
+forUsers/.claude/allPdf.txt
+
+# Node modules
+appForFolders/node_modules/

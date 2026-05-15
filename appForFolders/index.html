@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pick folders for /classify-receipts3</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      margin: 0; padding: 20px; max-width: 760px;
+      color: #0f172a; background: #f8fafc;
+    }
+    h1 { font-size: 18px; margin: 0 0 4px 0; }
+    p.lead { font-size: 13px; color: #475569; margin: 0 0 16px 0; }
+    code { background: #e2e8f0; padding: 1px 4px; border-radius: 3px; font-size: 12px; }
+    button {
+      padding: 8px 14px; background: #2563eb; color: white;
+      border: none; border-radius: 4px; cursor: pointer; font-size: 14px;
+    }
+    button:hover { background: #1d4ed8; }
+    button:disabled { background: #94a3b8; cursor: default; }
+    button.secondary { background: #475569; }
+    button.secondary:hover { background: #334155; }
+    button.success { background: #059669; }
+    button.success:hover { background: #047857; }
+    .row { display: flex; gap: 10px; align-items: center; margin: 12px 0; }
+    .list {
+      border: 1px solid #cbd5e1; border-radius: 4px;
+      min-height: 120px; max-height: 280px; overflow: auto;
+      padding: 4px; background: white;
+    }
+    .item {
+      padding: 6px 8px; border-bottom: 1px solid #f1f5f9;
+      font-family: ui-monospace, "Consolas", monospace; font-size: 12px;
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+    }
+    .item:last-child { border-bottom: none; }
+    .item .path { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .item .tag { font-size: 11px; padding: 2px 6px; border-radius: 3px; white-space: nowrap; }
+    .item.ok .tag      { background: #dcfce7; color: #166534; }
+    .item.missing .tag { background: #fee2e2; color: #b91c1c; }
+    .dest {
+      background: #e2e8f0; padding: 6px 10px; border-radius: 4px;
+      font-family: ui-monospace, "Consolas", monospace; font-size: 12px;
+      flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .status { font-size: 13px; padding: 6px 10px; border-radius: 4px; }
+    .status.ok  { background: #dcfce7; color: #166534; }
+    .status.err { background: #fee2e2; color: #b91c1c; }
+    .muted { color: #64748b; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>Pick folders for <code>/classify-receipts3</code></h1>
+  <p class="lead">
+    Choose one or more client folders. The app writes the path of each folder's <code>receipts.pdf</code>
+    into <code>allPdf.txt</code>, which the <code>/classify-receipts3</code> command reads.
+  </p>
+
+  <div class="row">
+    <button id="pick">Pick folders…</button>
+    <span id="count" class="muted">No folders picked yet.</span>
+  </div>
+
+  <div class="list" id="list">
+    <div style="padding: 30px; text-align: center; color: #94a3b8; font-size: 13px;">
+      Picked folders will appear here.
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 18px;">
+    <span class="muted" style="min-width: 100px;">allPdf.txt path:</span>
+    <span class="dest" id="dest">—</span>
+    <button class="secondary" id="changeDest">Change…</button>
+  </div>
+
+  <div class="row" style="margin-top: 16px;">
+    <button id="write" class="success" disabled>Write allPdf.txt</button>
+    <span id="status" class="muted"></span>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
