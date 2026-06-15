@@ -1,0 +1,1 @@
+- [Receipts classifier project (testATCA)](project_receipts_classifier.md) — POC pentru clasificare bonuri fiscale RO cu LLM, output catre SAGA
